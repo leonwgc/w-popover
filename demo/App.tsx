@@ -1,85 +1,32 @@
-import React, { useRef, useEffect } from 'react';
-import { Toast, useMount } from 'react-uni-comps';
-import { TouchElement } from 'w-touch';
-import pkq from './images/pkq.png';
+import React, { useRef, useState } from 'react';
+import { Toast, useMount, Button } from 'react-uni-comps';
+// import Popover from 'w-popover';
 
-type Position = {
-  x: number;
-  y: number;
-  angle: number;
-  scale: number;
-};
-
-const update = (el, transform, statusEl) => {
-  const cssTransform = `translate(${transform.x}px,${transform.y}px) rotate(${transform.angle}deg) scale(${transform.scale})`;
-
-  el.style.transform = cssTransform;
-  statusEl.innerText = '坐标: ' + cssTransform;
-};
+import Popover from '../src';
 
 export default function App() {
-  const ref = useRef<Position>({ x: 0, y: 0, angle: 0, scale: 1 });
-  const elRef = useRef<HTMLDivElement>();
-
-  const statusElRef = useRef<HTMLDivElement>();
-
+  const [v, setV] = useState(false);
   useMount(() => {
-    document.title = 'w-touch: 鼠标,手势库';
+    document.title = 'w-popover: 气泡框';
   });
 
-  useEffect(() => {
-    update(elRef.current, ref.current, statusElRef.current);
-  }, []);
-
   return (
-    <div>
-      <div ref={statusElRef} style={{ color: '#666', fontSize: 12 }}></div>
-      <TouchElement
-        onDoubleTap={() => {
-          Toast.show({
-            modal: false,
-            duration: 400,
-            content: '你双击了皮卡丘',
-          });
-        }}
-        onLongTap={() => {
-          Toast.show({
-            modal: false,
-            duration: 400,
-            content: '你长按了皮卡丘',
-          });
-        }}
-        onPinch={(e) => {
-          ref.current.scale = e.scale;
-          update(elRef.current, ref.current, statusElRef.current);
-        }}
-        onRotate={(e) => {
-          ref.current.angle += e.angle;
-          update(elRef.current, ref.current, statusElRef.current);
-        }}
-        onPressMove={(e) => {
-          ref.current.x = ref.current.x + e.deltaX;
-          ref.current.y = ref.current.y + e.deltaY;
-
-          update(elRef.current, ref.current, statusElRef.current);
-        }}
-        onTwoFingerPressMove={(e) => {
-          ref.current.x = ref.current.x + e.deltaX;
-          ref.current.y = ref.current.y + e.deltaY;
-        }}
-        ref={elRef}
+    <Popover
+      placement="right-bottom"
+      visible={v}
+      onClose={() => setV(false)}
+      content={<div style={{ padding: 16 }}>I'm here </div>}
+      onVisibleChange={(v) => {
+        console.log(v);
+      }}
+    >
+      <Button
+        style={{ margin: '100px 0px 10px 150px' }}
+        onMouseOut={() => setV(false)}
+        onMouseOver={() => setV(true)}
       >
-        <div
-          style={{
-            touchAction: 'none',
-            width: 200,
-            height: 200,
-            background: `center / contain no-repeat url(${pkq})`,
-            marginLeft: 100,
-            marginTop: 100,
-          }}
-        />
-      </TouchElement>
-    </div>
+        hi, there~
+      </Button>
+    </Popover>
   );
 }

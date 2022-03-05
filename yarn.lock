@@ -9059,7 +9059,7 @@ react-transition-group@^4.4.2:
     loose-envify "^1.4.0"
     prop-types "^15.6.2"
 
-react-uni-comps@^1.5.5:
+react-uni-comps@1.5.6:
   version "1.5.6"
   resolved "https://registry.yarnpkg.com/react-uni-comps/-/react-uni-comps-1.5.6.tgz#c9cbb6e7e80d34059a801eb63e155a8add85ce3f"
   integrity sha512-3vI6RsTiYLl+dxwCc6rk9qRNhc6WhmeoE7Rbb6BBw15wFG+oZ7ZyUf+jhzGXwdcnTxygJW7xD4fvJcgYvdpNFQ==

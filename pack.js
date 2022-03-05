@@ -18,7 +18,7 @@ pack(!isBuild, {
   },
   resolve: {
     alias: {
-      'w-touch': path.resolve(__dirname, './src'),
+      'w-popover': path.resolve(__dirname, './src'),
     },
   },
 });
