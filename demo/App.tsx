@@ -1,7 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Toast, useMount, Button } from 'react-uni-comps';
-// import Popover from 'w-popover';
-
+import React, { useState } from 'react';
+import { useMount, Button } from 'react-uni-comps';
 import Popover from '../src';
 
 export default function App() {
