@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
 import type { Placement } from './types';
 import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
-import styled from 'styled-components';
 import clsx from 'clsx';
 import Mask from './Mask';
 import { MARGIN, Offset } from './utils/getModalStyle';
@@ -10,43 +9,6 @@ import useCallbackRef from './hooks/useCallbackRef';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import { useSpring, animated, easings } from '@react-spring/web';
 import IconClose from './IconClose';
-
-// port from https://github.com/bytedance/guide and refactor
-
-const StyledPopover = styled(animated.div)`
-  position: absolute;
-  z-index: 1000;
-  background: #fff;
-  border-radius: 2px;
-
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  .uc-popover-content {
-  }
-
-  .uc-popover-close {
-    position: absolute;
-    z-index: 10;
-    top: 12px;
-    right: 12px;
-    cursor: pointer;
-    color: #000;
-    opacity: 0.35;
-    font-size: 16px;
-
-    :hover {
-      opacity: 0.75;
-    }
-  }
-
-  .uc-popover-arrow {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    z-index: -1;
-    background: inherit;
-    transform: rotate(45deg);
-  }
-`;
 
 export type Props = {
   /** 弹框位置,默认bottom */
@@ -83,7 +45,7 @@ export type Props = {
   /** 点击遮罩是否关闭,默认true*/
   closeOnMaskClick?: boolean;
   /** 展开动画, 默认true */
-  animated?: boolean;
+  animate?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
 
 /**
@@ -110,7 +72,7 @@ const Popover = (props: Props): React.ReactElement => {
     mountContainer,
     closeOnClickOutside = true,
     closeOnMaskClick = true,
-    animated = true,
+    animate = true,
     offset = {},
     ...rest
   } = props;
@@ -210,7 +172,7 @@ const Popover = (props: Props): React.ReactElement => {
     onRest: () => {
       setActive(visible);
     },
-    immediate: !animated,
+    immediate: !animate,
     config: {
       duration: 220,
       easing: easings.easeInOutQuart,
@@ -232,7 +194,7 @@ const Popover = (props: Props): React.ReactElement => {
               }}
             />
 
-            <StyledPopover
+            <animated.div
               {...rest}
               ref={popoverRef}
               className={clsx(className, 'uc-popover', { mask: mask })}
@@ -268,7 +230,7 @@ const Popover = (props: Props): React.ReactElement => {
               {/** content */}
 
               <div className={clsx('uc-popover-content')}>{content}</div>
-            </StyledPopover>
+            </animated.div>
           </div>
         ),
         mountNode

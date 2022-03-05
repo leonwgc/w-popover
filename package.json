@@ -1,23 +1,15 @@
 {
-  "name": "w-touch",
-  "version": "1.0.3",
-  "description": "桌面和移动端手势库 desktop & mobile gesture lib",
+  "name": "w-popover",
+  "version": "0.9.0",
+  "description": "react弹出气泡框",
   "keywords": [
-    "touch",
-    "gesture",
-    "tap",
-    "doubleTap",
-    "longTap",
-    "rotate",
-    "pinch",
-    "pressMove",
-    "swipe",
-    "two finger"
+    "popover",
+    "pop"
   ],
   "license": "MIT",
-  "repository": "https://github.com/leonwgc/w-touch",
+  "repository": "https://github.com/leonwgc/w-popover",
   "bugs": {
-    "url": "https://github.com/leonwgc/w-touch/issues"
+    "url": "https://github.com/leonwgc/w-popover/issues"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

@@ -1,0 +1,31 @@
+.uc-popover {
+  position: absolute;
+  z-index: 1000;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+  .uc-popover-close {
+    position: absolute;
+    z-index: 10;
+    top: 12px;
+    right: 12px;
+    cursor: pointer;
+    color: #000;
+    opacity: 0.35;
+    font-size: 16px;
+
+    :hover {
+      opacity: 0.75;
+    }
+  }
+
+  .uc-popover-arrow {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    z-index: -1;
+    background: inherit;
+    transform: rotate(45deg);
+  }
+}

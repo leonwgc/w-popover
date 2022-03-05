@@ -1,21 +1,8 @@
 import React, { HTMLAttributes, ReactElement, useState, useEffect } from 'react';
-import styled from 'styled-components';
 import clsx from 'clsx';
 import { useSpring, animated } from '@react-spring/web';
 import useUnmount from './hooks/useUnmount';
-import * as vars from './vars';
-
-const StyledMask = styled(animated.div)`
-  background-color: rgba(0, 0, 0);
-  z-index: 100;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  touch-action: none;
-`;
+import './Mask.less';
 
 type Props = {
   /** 显示遮罩时，设置body.style.overflow为hidden,默认true */
@@ -35,7 +22,7 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     children,
     className,
     visible,
-    duration = vars.animationNormal,
+    duration = 220,
     style,
     hideOverflow = true,
     ...rest
@@ -66,14 +53,14 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   });
 
   return active || visible ? (
-    <StyledMask
+    <animated.div
       ref={ref}
       {...rest}
       className={clsx('uc-mask', className)}
       style={{ ...styles, ...style }}
     >
       {children}
-    </StyledMask>
+    </animated.div>
   ) : null;
 });
 
