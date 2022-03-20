@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import type { Placement } from './types';
+import { attachPropertiesToComponent, Placement } from './types';
 import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
 import clsx from 'clsx';
 import Mask from './Mask';
@@ -10,6 +10,7 @@ import useUpdateEffect from './hooks/useUpdateEffect';
 import { useSpring, animated, easings } from '@react-spring/web';
 import IconClose from './IconClose';
 import './Popover.less';
+import { show, hide, noop } from './show';
 
 export type Props = {
   /** 弹框位置,默认bottom */
@@ -240,4 +241,4 @@ const Popover = (props: Props): React.ReactElement => {
   );
 };
 
-export default Popover;
+export default attachPropertiesToComponent(Popover, { show, hide: hide || noop });

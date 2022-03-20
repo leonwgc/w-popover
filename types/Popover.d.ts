@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Placement } from './types';
+import { Placement } from './types';
 import { Offset } from './utils/getModalStyle';
 import './Popover.less';
 export declare type Props = {
@@ -39,11 +39,8 @@ export declare type Props = {
     /** 展开动画, 默认true */
     animate?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
-/**
- * 点击/鼠标移入元素，弹出气泡式的卡片浮层
- *
- * @param {Props} props
- * @return {*}  {React.ReactElement}
- */
-declare const Popover: (props: Props) => React.ReactElement;
-export default Popover;
+declare const _default: ((props: Props) => React.ReactElement<any, string | React.JSXElementConstructor<any>>) & {
+    show: (props: import("./show").Props) => () => void;
+    hide: () => void;
+};
+export default _default;

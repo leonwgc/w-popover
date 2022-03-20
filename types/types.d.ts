@@ -6,3 +6,14 @@ export interface ITargetPos {
     width: number;
     height: number;
 }
+/**
+ * attach static props to component
+ *
+ * @export
+ * @template C
+ * @template P
+ * @param {C} component
+ * @param {P} properties
+ * @return {*}  {(C & P)}
+ */
+export declare function attachPropertiesToComponent<C, P extends Record<string, any>>(component: C, properties: P): C & P;
