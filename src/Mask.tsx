@@ -5,7 +5,9 @@ import useUnmount from './hooks/useUnmount';
 import './Mask.less';
 
 type Props = {
-  /** 显示遮罩时，设置body.style.overflow为hidden,默认true */
+  /** 显示遮罩时，设置body.style.overflow为hidden
+   * @default true
+   */
   hideOverflow?: boolean;
   style?: React.CSSProperties;
   /** 是否可见 */
