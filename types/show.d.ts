@@ -11,5 +11,11 @@ export declare type Props = Omit<PopoverProps, 'children' | 'onVisibleChange' | 
 declare type Action = () => void;
 export declare const noop: () => void;
 export declare let hide: Action;
+/**
+ * 静态调用
+ *
+ * @param {Props} props
+ * @return {*}  {(() => void)}
+ */
 export declare const show: (props: Props) => (() => void);
 export {};
