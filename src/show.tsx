@@ -23,7 +23,12 @@ export let hide: Action = noop;
 const isNumber = (n) => {
   return Object.prototype.toString.call(n) === '[object Number]' && n === n;
 };
-
+/**
+ * 静态调用
+ *
+ * @param {Props} props
+ * @return {*}  {(() => void)}
+ */
 export const show = (props: Props): (() => void) => {
   let { left: x, top: y, anchor, placement = 'top', ...rest } = props;
 
