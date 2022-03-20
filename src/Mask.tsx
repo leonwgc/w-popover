@@ -39,7 +39,7 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
       setActive(true);
     },
     onRest: () => {
-      setActive(visible);
+      // setActive(visible);
     },
     config: {
       duration,
