@@ -187,7 +187,7 @@ const Popover = (props: Props): React.ReactElement => {
         (visible || active) && (
           <div className={clsx('uc-popover-wrap')}>
             <Mask
-              visible={mask}
+              visible={mask && visible}
               className={maskClass}
               style={maskStyle}
               onClick={() => {

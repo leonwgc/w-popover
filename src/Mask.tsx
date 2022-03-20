@@ -10,7 +10,9 @@ type Props = {
   style?: React.CSSProperties;
   /** 是否可见 */
   visible?: boolean;
-  /** 动画时间,默认220 */
+  /** 动画时间
+   * @default 280
+   */
   duration?: number;
   className?: string;
   children?: ReactElement;
@@ -22,7 +24,7 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     children,
     className,
     visible,
-    duration = 220,
+    duration = 280,
     style,
     hideOverflow = true,
     ...rest
