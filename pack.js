@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { default: pack } = require('packx');
+const { default: pack } = require('packw');
 const argv = require('yargs').argv;
 const path = require('path');
 
@@ -14,7 +14,7 @@ pack(!isBuild, {
     publicPath: '',
   },
   devServer: {
-    port: 9200,
+    port: 9101,
   },
   resolve: {
     alias: {
