@@ -30,13 +30,6 @@ export default function App() {
             left,
             top,
             content: 'hello,world',
-            style: {
-              width: 200,
-              height: 100,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            },
             closable: true,
             closeOnMaskClick: true,
           });
@@ -68,7 +61,6 @@ export default function App() {
             Popover.show({
               anchor: elRef,
               content: p,
-              style: { padding: 20 },
               placement: p,
               mask: true,
             });

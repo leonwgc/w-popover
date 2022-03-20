@@ -30,7 +30,7 @@ const isNumber = (n) => {
  * @return {*}  {(() => void)}
  */
 export const show = (props: Props): (() => void) => {
-  let { left: x, top: y, anchor, placement = 'top', ...rest } = props;
+  let { left: x, top: y, anchor, placement = 'top', style, ...rest } = props;
 
   const div = document.createElement('div');
 
@@ -67,6 +67,7 @@ export const show = (props: Props): (() => void) => {
       closeOnClickOutside={false}
       onClose={() => dispose()}
       visible
+      style={{ padding: 20, ...style }}
       placement={placement}
       {...rest}
     >
