@@ -14,17 +14,23 @@ export type Props = Omit<PopoverProps, 'children' | 'onVisibleChange' | 'closeOn
   anchor?: Element | string | React.MutableRefObject<Element>;
 };
 
-type Action = () => void;
+let _hide;
 
-export const noop = () => {};
-
-export let hide: Action = noop;
+/**
+ *  关闭popover
+ *
+ */
+export const hide = () => {
+  if (typeof _hide === 'function') {
+    _hide();
+  }
+};
 
 const isNumber = (n) => {
   return Object.prototype.toString.call(n) === '[object Number]' && n === n;
 };
 /**
- * 静态调用
+ * 静态调用显示
  *
  * @param {Props} props
  * @return {*}  {(() => void)}
@@ -34,8 +40,8 @@ export const show = (props: Props): (() => void) => {
 
   const div = document.createElement('div');
 
-  if (hide) {
-    hide?.();
+  if (_hide) {
+    _hide?.();
   }
 
   let w = 0;
@@ -87,7 +93,7 @@ export const show = (props: Props): (() => void) => {
     div
   );
 
-  hide = dispose;
+  _hide = dispose;
 
   return dispose;
 };

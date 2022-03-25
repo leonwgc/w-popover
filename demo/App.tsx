@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useMount, Button, AutoCenter, Avatar } from 'react-uni-comps';
+import { useMount, Button, AutoCenter, Avatar, Space } from 'react-uni-comps';
 import Popover, { Placement } from '../src';
 
 export default function App() {
@@ -20,23 +20,34 @@ export default function App() {
           {pos.x},{pos.y}
         </div>
       )}
-      <Button
-        type="primary"
-        onClick={() => {
-          const left = ~~(Math.random() * window.innerWidth);
-          const top = ~~(Math.random() * window.innerHeight);
 
-          Popover.show({
-            left,
-            top,
-            content: 'hello,world',
-            closable: true,
-            closeOnMaskClick: true,
-          });
-        }}
-      >
-        随机位置显示
-      </Button>
+      <Space>
+        <Button
+          type="primary"
+          onClick={() => {
+            const left = ~~(Math.random() * window.innerWidth);
+            const top = ~~(Math.random() * window.innerHeight);
+
+            Popover.show({
+              left,
+              top,
+              content: 'hello,world',
+              closable: true,
+              closeOnMaskClick: true,
+            });
+          }}
+        >
+          随机位置显示
+        </Button>
+
+        <Button
+          onClick={() => {
+            Popover.hide();
+          }}
+        >
+          close
+        </Button>
+      </Space>
 
       <AutoCenter>
         <Button

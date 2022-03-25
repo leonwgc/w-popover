@@ -10,7 +10,7 @@ import useUpdateEffect from './hooks/useUpdateEffect';
 import { useSpring, animated, easings } from '@react-spring/web';
 import IconClose from './IconClose';
 import './Popover.less';
-import { show, hide, noop } from './show';
+import { show, hide } from './show';
 
 export type Props = {
   /** 弹框位置,默认bottom */
@@ -241,4 +241,4 @@ const Popover = (props: Props): React.ReactElement => {
   );
 };
 
-export default attachPropertiesToComponent(Popover, { show, hide: hide || noop });
+export default attachPropertiesToComponent(Popover, { show, hide });
