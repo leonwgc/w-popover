@@ -1,7 +1,7 @@
 {
   "name": "w-popover",
-  "version": "1.1.0",
-  "description": "react 气泡框",
+  "version": "1.1.2",
+  "description": "react气泡框",
   "keywords": [
     "popover",
     "pop"
