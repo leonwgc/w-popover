@@ -40,8 +40,11 @@ export type Props = {
   maskClass?: string;
   /** 弹框自定义偏移 */
   offset?: Offset;
-  /** 弹框mount位置，默认为document.body */
-  mountContainer?: () => HTMLElement;
+  /**
+   * 弹框挂载节点
+   * @default document.body
+   */
+  mountContainer?: () => HTMLElement | HTMLElement;
   /** 点击外部区域是否关闭,默认true*/
   closeOnClickOutside?: boolean;
   /** 点击遮罩是否关闭,默认true*/
@@ -71,7 +74,7 @@ const Popover = (props: Props): React.ReactElement => {
     mask,
     maskStyle,
     maskClass,
-    mountContainer,
+    mountContainer = document.body,
     closeOnClickOutside = true,
     closeOnMaskClick = true,
     animate = true,
@@ -91,7 +94,12 @@ const Popover = (props: Props): React.ReactElement => {
   // animation effect
   const [active, setActive] = useState(visible);
 
-  const mountNode = mountContainer?.() || document.body;
+  let mountNode;
+  if (mountContainer instanceof HTMLElement) {
+    mountNode = mountContainer;
+  } else {
+    mountNode = mountContainer?.();
+  }
 
   useEffect(() => {
     offsetRef.current = offset;
