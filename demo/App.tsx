@@ -98,7 +98,7 @@ export default function App() {
           console.log(v);
         }}
         closable
-        mask
+        // mask
       >
         <Button
           outlined

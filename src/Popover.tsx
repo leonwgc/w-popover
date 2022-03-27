@@ -7,10 +7,11 @@ import Mask from './Mask';
 import { MARGIN, Offset } from './utils/getModalStyle';
 import useCallbackRef from './hooks/useCallbackRef';
 import useUpdateEffect from './hooks/useUpdateEffect';
-import { useSpring, animated, easings } from '@react-spring/web';
+import { useSpring, animated } from '@react-spring/web';
 import IconClose from './IconClose';
 import './Popover.less';
 import { show, hide } from './show';
+import useUpdateLayoutEffect from './hooks/useUpdateLayoutEffect';
 
 export type Props = {
   /** 弹框位置,默认bottom */
@@ -101,6 +102,31 @@ const Popover = (props: Props): React.ReactElement => {
     mountNode = mountContainer?.();
   }
 
+  const [styles, api] = useSpring(() => ({
+    from: { v: 1 },
+    config: {
+      duration: 220,
+    },
+    immediate: !animate,
+    onStart: () => {
+      setActive(true);
+    },
+    onRest: () => {
+      setActive(visible);
+    },
+  }));
+
+  useUpdateLayoutEffect(() => {
+    api.start({
+      from: {
+        v: visible ? 0 : 1,
+      },
+      to: {
+        v: visible ? 1 : 0,
+      },
+    });
+  }, [visible, api]);
+
   useEffect(() => {
     offsetRef.current = offset;
   }, [offset]);
@@ -173,28 +199,12 @@ const Popover = (props: Props): React.ReactElement => {
     }
   }, [closeOnClickOutside, closeOutsideHandler]);
 
-  const { translate, opacity } = useSpring({
-    translate: visible ? 0 : 10,
-    opacity: visible ? 1 : 0,
-    onStart: () => {
-      setActive(true);
-    },
-    onRest: () => {
-      setActive(visible);
-    },
-    immediate: !animate,
-    config: {
-      duration: 220,
-      easing: easings.easeInOutQuart,
-    },
-  });
-
   return (
     <>
       {React.cloneElement(children, { ref: anchorRef })}
       {ReactDOM.createPortal(
-        (visible || active) && (
-          <div className={clsx('uc-popover-wrap')}>
+        visible && (
+          <div>
             <Mask
               visible={mask && visible}
               className={maskClass}
@@ -211,35 +221,34 @@ const Popover = (props: Props): React.ReactElement => {
               style={{
                 ...modalStyle,
                 ...style,
-                opacity,
-                transform: translate.to((v) => {
-                  const p = placement.split('-')[0];
-
-                  if (p === 'bottom') {
-                    return `translate(0, -${v}%)`;
-                  }
-                  if (p === 'top') {
-                    return `translate(0, ${v}%)`;
-                  }
-                  if (p === 'left') {
-                    return `translate(${v}%, 0)`;
-                  }
-                  if (p === 'right') {
-                    return `translate(-${v}%, 0)`;
-                  }
-                  return 'none';
-                }),
+                opacity: styles.v.to((v) => v),
+                boxShadow: styles.v.to(
+                  (v) => v === 1 && `box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)`
+                ),
               }}
             >
-              {/* arrow */}
-              {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
+              {(active || visible) && (
+                <>
+                  {/* arrow */}
+                  {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
 
-              {/* close */}
-              {closable && <IconClose className={clsx('uc-popover-close')} onClick={onClose} />}
+                  {/* close */}
+                  {closable && <IconClose className={clsx('uc-popover-close')} onClick={onClose} />}
 
-              {/** content */}
-
-              <div className={clsx('uc-popover-content')}>{content}</div>
+                  {/** content */}
+                  <animated.div
+                    style={{
+                      ...styles,
+                      transform: styles.v
+                        .to({ range: [0, 1], output: [0.96, 1] })
+                        .to((v) => `scale(${v})`),
+                    }}
+                    className={clsx('uc-popover-content')}
+                  >
+                    {content}
+                  </animated.div>
+                </>
+              )}
             </animated.div>
           </div>
         ),
