@@ -61,7 +61,7 @@ export declare type Props = {
    * @default true
    *  */
   animate?: boolean;
-} & React.HTMLAttributes<HTMLElement>;
+};
 declare const _default: ((
   props: Props
 ) => React.ReactElement<any, string | React.JSXElementConstructor<any>>) & {

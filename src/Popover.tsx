@@ -82,7 +82,7 @@ export type Props = {
    * @default true
    *  */
   animate?: boolean;
-} & React.HTMLAttributes<HTMLElement>;
+};
 
 /**
  * 点击/鼠标移入元素，弹出气泡式的卡片浮层
