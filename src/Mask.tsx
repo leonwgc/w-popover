@@ -1,4 +1,4 @@
-import React, { HTMLAttributes, ReactElement, useState, useEffect } from 'react';
+import React, { ReactElement, useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { useSpring, animated } from '@react-spring/web';
 import useUnmount from './hooks/useUnmount';
@@ -9,7 +9,6 @@ type Props = {
    * @default true
    */
   hideOverflow?: boolean;
-  style?: React.CSSProperties;
   /** 是否可见 */
   visible?: boolean;
   /** 动画时间
@@ -17,8 +16,11 @@ type Props = {
    */
   duration?: number;
   className?: string;
+  style?: React.CSSProperties;
   children?: ReactElement;
-} & HTMLAttributes<HTMLDivElement>;
+  /** 点击回调 */
+  onClick?: (e: React.SyntheticEvent) => void;
+};
 
 /** 遮罩层 */
 const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {

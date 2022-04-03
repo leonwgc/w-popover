@@ -12,6 +12,28 @@ import IconClose from './IconClose';
 import './Popover.less';
 import { show, hide } from './show';
 
+type MountContainerType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
+const isObject = (obj) => Object.prototype.toString.call(obj) === '[object Object]';
+/**
+ *
+ *
+ * @param {MountContainerType} container
+ * @return {*}  {HTMLElement}
+ */
+export const getMountContainer = (container: MountContainerType): HTMLElement => {
+  let mountNode;
+
+  if (container instanceof HTMLElement) {
+    mountNode = container;
+  } else if (isObject(container) && 'current' in container) {
+    mountNode = container.current;
+  } else if (typeof container === 'function') {
+    mountNode = container?.();
+  }
+
+  return mountNode;
+};
+
 export type Props = {
   /** 弹框位置,默认bottom */
   placement?: Placement;
@@ -44,12 +66,21 @@ export type Props = {
    * 弹框挂载节点
    * @default document.body
    */
-  mountContainer?: () => HTMLElement | HTMLElement;
-  /** 点击外部区域是否关闭,默认true*/
+  mountContainer?: MountContainerType;
+  /**
+   * 点击外部区域是否关闭
+   * @default true
+   * */
   closeOnClickOutside?: boolean;
-  /** 点击遮罩是否关闭,默认true*/
+  /**
+   * 点击遮罩是否关闭
+   * @default true
+   * */
   closeOnMaskClick?: boolean;
-  /** 展开动画, 默认true */
+  /**
+   * 展开动画
+   * @default true
+   *  */
   animate?: boolean;
 } & React.HTMLAttributes<HTMLElement>;
 
@@ -94,12 +125,7 @@ const Popover = (props: Props): React.ReactElement => {
   // animation effect
   const [active, setActive] = useState(visible);
 
-  let mountNode;
-  if (mountContainer instanceof HTMLElement) {
-    mountNode = mountContainer;
-  } else {
-    mountNode = mountContainer?.();
-  }
+  const mountNode = getMountContainer(mountContainer);
 
   useEffect(() => {
     offsetRef.current = offset;
