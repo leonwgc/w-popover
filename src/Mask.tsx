@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useRef, useImperativeHandle } from 'react';
-import useFadeIn from './hooks/useFadein';
+import useFadeIn from './hooks/useTransition';
 
 type Props = {
   /** 显示遮罩时，设置body.style.overflow为hidden

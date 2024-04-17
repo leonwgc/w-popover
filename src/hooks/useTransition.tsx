@@ -1,15 +1,16 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useLatest from './useLatest';
 import useUpdateEffect from './useUpdateEffect';
 
-const getDom = (latestEl) => {
+const getElement = (elRef) => {
+  const el = elRef.current;
   let dom;
-  if (latestEl.current instanceof HTMLElement) {
-    dom = latestEl.current;
-  } else if (latestEl.current.current) {
-    dom = latestEl.current.current;
-  } else if (typeof latestEl.current === 'function') {
-    dom = latestEl.current.current();
+  if (el instanceof Element) {
+    dom = el;
+  } else if (el.current) {
+    dom = el.current;
+  } else if (typeof el.current === 'function') {
+    dom = el.current();
   }
 
   return dom;
@@ -28,8 +29,8 @@ export default function useFadeIn(el, visible = false, opacity = 1, duration = 1
   useUpdateEffect(() => {
     if (!visible) {
       if (active) {
-        const dom = getDom(latestEl);
-        dom.style.opacity = 0;
+        const el = getElement(latestEl);
+        el.style.opacity = 0;
         setTimeout(() => {
           setActive(false);
         }, duration);
@@ -37,21 +38,20 @@ export default function useFadeIn(el, visible = false, opacity = 1, duration = 1
     }
   }, [visible]);
 
-  useLayoutEffect(() => {
-    const dom = getDom(latestEl);
-
+  useEffect(() => {
+    const el = getElement(latestEl);
     if (visible) {
-      dom.style.opacity = 0;
+      el.style.opacity = 0;
       setActive(true);
 
       requestAnimationFrame(() => {
         setTimeout(() => {
-          dom.style.opacity = opacity;
+          el.style.opacity = opacity;
         }, 0);
       });
     } else {
       if (active) {
-        dom.style.opacity = 0;
+        el.style.opacity = 0;
       }
     }
   }, [visible, active, opacity, latestEl]);
