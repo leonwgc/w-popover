@@ -16,7 +16,7 @@ const getElement = (elRef) => {
   return dom;
 };
 
-const applyStyleToElement = (
+const applyStyleOrClsToElement = (
   el: HTMLElement,
   styleOrCls: React.CSSProperties | string,
   toBeRemovedCls
@@ -64,7 +64,7 @@ export default function useTransition(
     if (!visible) {
       if (active) {
         const el = getElement(latestEl);
-        applyStyleToElement(el, fromRef.current, toRef.current);
+        applyStyleOrClsToElement(el, fromRef.current, toRef.current);
         setTimeout(() => {
           setActive(false);
         }, duration);
@@ -75,17 +75,17 @@ export default function useTransition(
   useEffect(() => {
     const el = getElement(latestEl);
     if (visible) {
-      applyStyleToElement(el, fromRef.current, toRef.current);
+      applyStyleOrClsToElement(el, fromRef.current, toRef.current);
       setActive(true);
 
       requestAnimationFrame(() => {
         setTimeout(() => {
-          applyStyleToElement(el, toRef.current, fromRef.current);
+          applyStyleOrClsToElement(el, toRef.current, fromRef.current);
         }, 0);
       });
     } else {
       if (active) {
-        applyStyleToElement(el, fromRef.current, toRef.current);
+        applyStyleOrClsToElement(el, fromRef.current, toRef.current);
       }
     }
   }, [visible, active, fromRef, toRef, latestEl]);
