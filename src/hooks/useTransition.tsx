@@ -16,13 +16,25 @@ const getElement = (elRef) => {
   return dom;
 };
 
-const applyStyleToElement = (el: HTMLElement, styleOrCls: React.CSSProperties | string) => {
+const applyStyleToElement = (
+  el: HTMLElement,
+  styleOrCls: React.CSSProperties | string,
+  toBeRemovedCls
+) => {
   if (typeof styleOrCls === 'object' && styleOrCls) {
     for (const key of Object.keys(styleOrCls)) {
       el.style[key] = styleOrCls[key];
     }
   } else if (typeof styleOrCls === 'string') {
     el.classList.add(styleOrCls);
+
+    if (
+      typeof toBeRemovedCls === 'string' &&
+      toBeRemovedCls &&
+      el.classList.contains(toBeRemovedCls)
+    ) {
+      el.classList.remove(toBeRemovedCls);
+    }
   }
 };
 
@@ -52,7 +64,7 @@ export default function useTransition(
     if (!visible) {
       if (active) {
         const el = getElement(latestEl);
-        applyStyleToElement(el, fromRef.current);
+        applyStyleToElement(el, fromRef.current, toRef.current);
         setTimeout(() => {
           setActive(false);
         }, duration);
@@ -63,17 +75,17 @@ export default function useTransition(
   useEffect(() => {
     const el = getElement(latestEl);
     if (visible) {
-      applyStyleToElement(el, fromRef.current);
+      applyStyleToElement(el, fromRef.current, toRef.current);
       setActive(true);
 
       requestAnimationFrame(() => {
         setTimeout(() => {
-          applyStyleToElement(el, toRef.current);
+          applyStyleToElement(el, toRef.current, fromRef.current);
         }, 0);
       });
     } else {
       if (active) {
-        applyStyleToElement(el, fromRef.current);
+        applyStyleToElement(el, fromRef.current, toRef.current);
       }
     }
   }, [visible, active, fromRef, toRef, latestEl]);

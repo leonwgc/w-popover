@@ -1,10 +1,46 @@
 import React, { useState, useRef } from 'react';
-import { useMount, Button, AutoCenter, Avatar, Space } from 'react-uni-comps';
+import { useMount, Button, AutoCenter, Avatar, Space, styled } from 'react-uni-comps';
 import Popover, { Placement } from '../src';
 import Mask from '../src/Mask';
+import useTransition from '../src/hooks/useTransition';
+
+const Block = styled.div`
+  width: 100px;
+  height: 100px;
+  transition: all 250ms ease-in-out;
+
+  &.from {
+    width: 200px;
+    height: 10px;
+    opacity: 0;
+    transform: translate3d(0, -4px, 0);
+    color: #ccc;
+  }
+
+  &.to {
+    width: 200px;
+    height: 200px;
+    opacity: 1;
+    background-color: red;
+    transform: translate3d(0, 0, 0);
+  }
+`;
 
 export default function App() {
   const [v, setV] = useState(false);
+
+  const [v1, setV1] = useState(false);
+  const ref1 = useRef();
+
+  const active = useTransition(
+    ref1,
+    v1,
+    'from',
+    'to'
+    // { width: '400px', height: 0, opacity: 0, transform: 'translate3d(0, -20px, 0)' },
+    // { width: '400px', height: '200px', opacity: 1, transform: 'translate3d(0, 0, 0)' }
+  );
+
   const [pos, setPos] = useState<any>({ left: '', top: '' });
 
   const ref = useRef(0);
@@ -117,6 +153,12 @@ export default function App() {
       </Button>
 
       <Mask visible={visible} onClick={() => setVisible(false)} />
+
+      <Button type="primary" onClick={() => setV1((v) => !v)}>
+        show red block
+      </Button>
+
+      <p>{active && <Block ref={ref1} onClick={() => setV1(false)} />}</p>
     </div>
   );
 }

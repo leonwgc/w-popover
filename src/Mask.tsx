@@ -46,7 +46,7 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   }, [visible, hideOverflow]);
 
   return (
-    (active || visible) && (
+    active && (
       <div
         ref={wrapRef}
         {...rest}
