@@ -9,8 +9,8 @@ const getElement = (elRef) => {
     dom = el;
   } else if (el.current) {
     dom = el.current;
-  } else if (typeof el.current === 'function') {
-    dom = el.current();
+  } else if (typeof el === 'function') {
+    dom = el();
   }
 
   return dom;
