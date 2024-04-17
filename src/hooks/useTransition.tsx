@@ -27,12 +27,15 @@ const applyStyleToElement = (el: HTMLElement, styleOrCls: React.CSSProperties | 
 };
 
 /**
- *
+ * Apply transition effect to el
  * @param el
  * @param visible
- * @param opacity
+ * @param from
+ * @param to
+ * @param duration
+ * @returns true if el is shown or in transition status
  */
-export default function useFadeIn(
+export default function useTransition(
   el: Element | (() => Element) | React.MutableRefObject<Element>,
   visible: boolean,
   from: string | React.CSSProperties,
