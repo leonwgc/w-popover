@@ -30,10 +30,10 @@ const isNumber = (n) => {
   return Object.prototype.toString.call(n) === '[object Number]' && n === n;
 };
 /**
- * 静态调用显示
+ * Static method of Popover
  *
  * @param {Props} props
- * @return {*}  {(() => void)}
+ * @return {*}  hide popover fun.
  */
 export const show = (props: Props): (() => void) => {
   let { left: x, top: y, anchor, placement = 'top', style, ...rest } = props;

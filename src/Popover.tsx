@@ -217,58 +217,60 @@ const Popover = (props: Props): React.ReactElement => {
 
   return (
     <>
+      <Mask
+        visible={mask && visible}
+        className={maskClass}
+        style={maskStyle}
+        onClick={() => {
+          closeOnMaskClick && onClose?.();
+        }}
+      />
       {React.cloneElement(children, { ref: anchorRef })}
+
       {ReactDOM.createPortal(
-        (visible || active) && (
-          <div className={clsx('uc-popover-wrap')}>
-            <Mask
-              visible={mask && visible}
-              className={maskClass}
-              style={maskStyle}
-              onClick={() => {
-                closeOnMaskClick && onClose?.();
-              }}
-            />
+        <>
+          {(visible || active) && (
+            <div>
+              <animated.div
+                {...rest}
+                ref={popoverRef}
+                className={clsx(className, 'uc-popover', { mask: mask })}
+                style={{
+                  ...modalStyle,
+                  ...style,
+                  opacity,
+                  transform: translate.to((v) => {
+                    const p = placement.split('-')[0];
 
-            <animated.div
-              {...rest}
-              ref={popoverRef}
-              className={clsx(className, 'uc-popover', { mask: mask })}
-              style={{
-                ...modalStyle,
-                ...style,
-                opacity,
-                transform: translate.to((v) => {
-                  const p = placement.split('-')[0];
+                    if (p === 'bottom') {
+                      return `translate(0, -${v}%)`;
+                    }
+                    if (p === 'top') {
+                      return `translate(0, ${v}%)`;
+                    }
+                    if (p === 'left') {
+                      return `translate(${v}%, 0)`;
+                    }
+                    if (p === 'right') {
+                      return `translate(-${v}%, 0)`;
+                    }
+                    return 'none';
+                  }),
+                }}
+              >
+                {/* arrow */}
+                {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
 
-                  if (p === 'bottom') {
-                    return `translate(0, -${v}%)`;
-                  }
-                  if (p === 'top') {
-                    return `translate(0, ${v}%)`;
-                  }
-                  if (p === 'left') {
-                    return `translate(${v}%, 0)`;
-                  }
-                  if (p === 'right') {
-                    return `translate(-${v}%, 0)`;
-                  }
-                  return 'none';
-                }),
-              }}
-            >
-              {/* arrow */}
-              {arrow && <span className={clsx('uc-popover-arrow')} style={arrowStyle} />}
+                {/* close */}
+                {closable && <IconClose className={clsx('uc-popover-close')} onClick={onClose} />}
 
-              {/* close */}
-              {closable && <IconClose className={clsx('uc-popover-close')} onClick={onClose} />}
+                {/** content */}
 
-              {/** content */}
-
-              <div className={clsx('uc-popover-content')}>{content}</div>
-            </animated.div>
-          </div>
-        ),
+                <div className={clsx('uc-popover-content')}>{content}</div>
+              </animated.div>
+            </div>
+          )}
+        </>,
         mountNode
       )}
     </>

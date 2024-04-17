@@ -1,8 +1,5 @@
-import React, { ReactElement, useState, useEffect } from 'react';
-import clsx from 'clsx';
-import { useSpring, animated } from '@react-spring/web';
-import useUnmount from './hooks/useUnmount';
-import './Mask.less';
+import React, { ReactElement, useEffect, useRef, useImperativeHandle } from 'react';
+import useFadeIn from './hooks/useFadein';
 
 type Props = {
   /** 显示遮罩时，设置body.style.overflow为hidden
@@ -24,50 +21,49 @@ type Props = {
 
 /** 遮罩层 */
 const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
-  const {
-    children,
-    className,
-    visible,
-    duration = 280,
-    style,
-    hideOverflow = true,
-    ...rest
-  } = props;
+  const { children, visible, style, hideOverflow = true, ...rest } = props;
 
-  // animation effect
-  const [active, setActive] = useState(visible);
+  const wrapRef = useRef(null);
+  const lastOverFlowRef = useRef('');
 
-  const styles = useSpring({
-    opacity: visible ? 0.45 : 0,
-    onStart: () => {
-      setActive(true);
-    },
-    onRest: () => {
-      // setActive(visible);
-    },
-    config: {
-      duration,
-    },
-  });
+  useImperativeHandle(ref, () => wrapRef.current);
+
+  const active = useFadeIn(wrapRef, visible, 0.5, 200);
 
   useEffect(() => {
-    document.body.style.overflow = visible && hideOverflow ? 'hidden' : '';
+    lastOverFlowRef.current = document.body.style.overflow;
+    document.body.style.overflow = visible && hideOverflow ? 'hidden' : lastOverFlowRef.current;
+
+    return () => {
+      document.body.style.overflow = lastOverFlowRef.current;
+    };
   }, [visible, hideOverflow]);
 
-  useUnmount(() => {
-    document.body.style.overflow = '';
-  });
-
-  return active || visible ? (
-    <animated.div
-      ref={ref}
-      {...rest}
-      className={clsx('uc-mask', className)}
-      style={{ ...styles, ...style }}
-    >
-      {children}
-    </animated.div>
-  ) : null;
+  return (
+    (active || visible) && (
+      <div
+        ref={wrapRef}
+        {...rest}
+        style={{
+          ...style,
+          opacity: 0,
+          background: 'rgba(0, 0, 0)',
+          zIndex: 1000,
+          position: 'fixed',
+          left: 0,
+          top: 0,
+          bottom: 0,
+          right: 0,
+          width: '100%',
+          touchAction: 'none',
+          display: active ? '' : 'none',
+          transition: 'opacity 200ms linear',
+        }}
+      >
+        {children}
+      </div>
+    )
+  );
 });
 
 Mask.displayName = 'UC-Mask';

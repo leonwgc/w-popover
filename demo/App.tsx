@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useMount, Button, AutoCenter, Avatar, Space } from 'react-uni-comps';
 import Popover, { Placement } from '../src';
+import Mask from '../src/Mask';
 
 export default function App() {
   const [v, setV] = useState(false);
@@ -8,6 +9,8 @@ export default function App() {
 
   const ref = useRef(0);
   const elRef = useRef();
+
+  const [visible, setVisible] = useState(false);
 
   useMount(() => {
     document.title = 'w-popover: 气泡框';
@@ -51,7 +54,7 @@ export default function App() {
 
       <AutoCenter>
         <Button
-          style={{ position: 'fixed', zIndex: 10000 }}
+          style={{ position: 'fixed', zIndex: 100 }}
           type="primary"
           onClick={() => {
             const p = [
@@ -108,6 +111,12 @@ export default function App() {
           hi, there~
         </Button>
       </Popover>
+
+      <Button type="primary" onClick={() => setVisible(true)}>
+        mask test
+      </Button>
+
+      <Mask visible={visible} onClick={() => setVisible(false)} />
     </div>
   );
 }
