@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import useLatest from './useLatest';
 import useUpdateEffect from './useUpdateEffect';
 
@@ -58,6 +58,7 @@ export default function useTransition(
 ): boolean {
   const [active, setActive] = useState(visible);
   const latestEl = useLatest(el);
+  const timerRef = useRef(0);
 
   const fromRef = useLatest(from);
   const toRef = useLatest(to);
@@ -67,12 +68,20 @@ export default function useTransition(
       if (active) {
         const el = getElement(latestEl);
         applyStyleOrClsToElement(el, fromRef.current, toRef.current);
-        setTimeout(() => {
+        timerRef.current = window.setTimeout(() => {
           setActive(false);
         }, duration + delay);
       }
     }
   }, [visible]);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const el = getElement(latestEl);
