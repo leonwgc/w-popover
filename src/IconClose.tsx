@@ -21,7 +21,7 @@ type Props = {
 } & React.HTMLAttributes<HTMLSpanElement>;
 
 const Close: React.FC<Props> = (props) => {
-  return <span {...props}>{IconCross}</span>;
+  return <div {...props}>{IconCross}</div>;
 };
 
 Close.displayName = 'Close';

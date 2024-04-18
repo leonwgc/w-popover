@@ -40,6 +40,7 @@ const aniMap = {
   left: 'right',
   right: 'left',
 };
+
 const getTransformPosition = (placement) => {
   const pos = placement.split('-');
 
@@ -104,6 +105,9 @@ export type Props = {
    * @default true
    *  */
   transition?: boolean;
+  /**
+   *  transitionDuration 200
+   */
   transitionDuration?: number;
 };
 
@@ -260,7 +264,7 @@ const Popover = (props: Props): React.ReactElement => {
             <div
               {...rest}
               ref={popoverRef}
-              className={clsx(className, 'uc-popover', { mask: mask })}
+              className={clsx(className, 'w-popover')}
               style={{
                 ...style,
                 position: 'absolute',
@@ -274,7 +278,7 @@ const Popover = (props: Props): React.ReactElement => {
             >
               {/* arrow */}
               {arrow && (
-                <span
+                <div
                   className={clsx('w-popover__arrow')}
                   style={{
                     position: 'absolute',
@@ -307,9 +311,7 @@ const Popover = (props: Props): React.ReactElement => {
                   }}
                 />
               )}
-
-              {/** content */}
-              <div className={clsx('uc-popover-content')}>{content}</div>
+              {content}
             </div>
           )}
         </>,
