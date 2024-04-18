@@ -1,5 +1,4 @@
 import React, { ReactElement } from 'react';
-import './Mask.less';
 declare type Props = {
   /** 显示遮罩时，设置body.style.overflow为hidden
    * @default true

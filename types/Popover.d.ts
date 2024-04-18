@@ -1,7 +1,6 @@
 import React from 'react';
 import { Placement } from './types';
 import { Offset } from './utils/getModalStyle';
-import './Popover.less';
 declare type MountContainerType =
   | HTMLElement
   | (() => HTMLElement)
@@ -57,10 +56,14 @@ export declare type Props = {
    * */
   closeOnMaskClick?: boolean;
   /**
-   * 展开动画
+   * transition on / off
    * @default true
    *  */
-  animate?: boolean;
+  transition?: boolean;
+  /**
+   *  transitionDuration 200
+   */
+  transitionDuration?: number;
 };
 declare const _default: ((
   props: Props

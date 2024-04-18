@@ -17,9 +17,9 @@ export declare type Props = Omit<
  */
 export declare const hide: () => void;
 /**
- * 静态调用显示
+ * Static method of Popover
  *
  * @param {Props} props
- * @return {*}  {(() => void)}
+ * @return {*}  hide popover fun.
  */
 export declare const show: (props: Props) => () => void;
