@@ -170,6 +170,8 @@ export default function App() {
       <p>{active && <Block ref={ref1} onClick={() => setV1(false)} />}</p>
 
       {/* <p>{active2 && <Block ref={ref2} onClick={() => setV2(false)} />}</p> */}
+
+      <p style={{ height: '100vh' }}></p>
     </div>
   );
 }

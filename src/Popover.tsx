@@ -4,8 +4,8 @@ import ReactDOM from 'react-dom';
 import IconClose from './IconClose';
 import Mask from './Mask';
 import useCSSTransition from './hooks/useCSSTransition';
-import useCallbackRef from './hooks/useCallbackRef';
 import useEventListener from './hooks/useEventListener';
+import useLatest from './hooks/useLatest';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import { hide, show } from './show';
 import { Placement, attachPropertiesToComponent } from './types';
@@ -141,7 +141,7 @@ const Popover = (props: Props): React.ReactElement => {
   const popoverRef = useRef<HTMLDivElement>(null);
   const resizeTimerRef = useRef<number>(0);
   const offsetRef = useRef<Offset>(offset);
-  const onCloseRef = useCallbackRef(onClose);
+  const onCloseRef = useLatest(onClose);
   const [arrowStyle, setArrowStyle] = useState({});
   const mountNode = getMountContainer(mountContainer);
 
@@ -202,6 +202,8 @@ const Popover = (props: Props): React.ReactElement => {
   };
 
   useEventListener(() => window, 'resize', visible ? handleResize : null);
+
+  useEventListener(() => window, 'scroll', visible ? handleResize : null);
 
   useLayoutEffect(() => {
     const anchorEl = anchorRef.current;
