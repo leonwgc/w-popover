@@ -148,6 +148,7 @@ const Popover = (props: Props): React.ReactElement => {
   const onCloseRef = useLatest(onClose);
   const [arrowStyle, setArrowStyle] = useState({});
   const mountNode = getMountContainer(mountContainer);
+  const mountedRef = useRef(false);
 
   useEffect(() => {
     offsetRef.current = offset;
@@ -214,7 +215,10 @@ const Popover = (props: Props): React.ReactElement => {
     const scrollContainer = getScrollContainer(anchorEl);
 
     if (visible) {
-      calculateStyle(anchorEl, scrollContainer, true);
+      calculateStyle(anchorEl, scrollContainer, !mountedRef.current);
+      mountedRef.current = true;
+    } else {
+      mountedRef.current = false;
     }
   }, [visible, calculateStyle]);
 
@@ -266,7 +270,6 @@ const Popover = (props: Props): React.ReactElement => {
               ref={popoverRef}
               className={clsx(className, 'w-popover')}
               style={{
-                ...style,
                 position: 'absolute',
                 background: '#fff',
                 zIndex: 1000,
@@ -274,6 +277,7 @@ const Popover = (props: Props): React.ReactElement => {
                 transitionDuration: `${transitionDuration}ms`,
                 transitionProperty: 'none',
                 willChange: 'transform, opacity',
+                ...style,
               }}
             >
               {/* arrow */}

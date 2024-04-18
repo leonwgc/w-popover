@@ -47,7 +47,7 @@ export default function useEventListener(
     }
 
     const eventListener = (e: Event) => {
-      return handlerRef.current(e);
+      return handlerRef.current?.(e);
     };
 
     const type = typeRef.current;

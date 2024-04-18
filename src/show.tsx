@@ -73,7 +73,8 @@ export const show = (props: Props): (() => void) => {
       closeOnClickOutside={false}
       onClose={() => dispose()}
       visible
-      style={{ padding: 20, ...style }}
+      transition={false}
+      style={style}
       placement={placement}
       {...rest}
     >
