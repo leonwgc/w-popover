@@ -48,7 +48,7 @@ const applyStyleOrClsToElement = (
  * @param delay  ms, default 0
  * @returns true if el is shown or in transition status
  */
-export default function useTransition(
+export default function useCSSTransition(
   el: Element | (() => Element) | React.MutableRefObject<Element>,
   visible: boolean,
   from: string | React.CSSProperties,

@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect, useRef, useImperativeHandle } from 'react';
-import useTransition from './hooks/useTransition';
+import useCSSTransition from './hooks/useCSSTransition';
 
 type Props = {
   /** 显示遮罩时，设置body.style.overflow为hidden
@@ -28,7 +28,7 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
 
   useImperativeHandle(ref, () => wrapRef.current);
 
-  const active = useTransition(
+  const active = useCSSTransition(
     () => wrapRef.current,
     visible,
     { opacity: 0 },

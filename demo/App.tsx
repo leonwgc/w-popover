@@ -1,13 +1,12 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useMount, Button, AutoCenter, Avatar, Space, styled } from 'react-uni-comps';
 import Popover, { Placement } from '../src';
 import Mask from '../src/Mask';
-import useTransition from '../src/hooks/useTransition';
+import useCSSTransition from '../src/hooks/useCSSTransition';
 
 const Block = styled.div`
-  width: 100px;
-  height: 100px;
   transition: all 250ms ease-in-out;
+  background-color: red;
 
   &.from {
     width: 200px;
@@ -21,7 +20,6 @@ const Block = styled.div`
     width: 200px;
     height: 200px;
     opacity: 1;
-    background-color: red;
     transform: translate3d(0, 0, 0);
   }
 `;
@@ -30,16 +28,25 @@ export default function App() {
   const [v, setV] = useState(false);
 
   const [v1, setV1] = useState(false);
+  const [v2, setV2] = useState(false);
   const ref1 = useRef();
+  const ref2 = useRef();
 
-  const active = useTransition(
-    ref1,
-    v1,
-    'from',
-    'to'
-    // { width: '400px', height: 0, opacity: 0, transform: 'translate3d(0, -20px, 0)' },
-    // { width: '400px', height: '200px', opacity: 1, transform: 'translate3d(0, 0, 0)' }
+  const active = useCSSTransition(ref1, v1, 'from', 'to', 250);
+
+  const active2 = useCSSTransition(
+    ref2,
+    v2,
+    { width: '400px', height: '0px', opacity: 0, transform: 'translate3d(0, -20px, 0)' },
+    { width: '400px', height: '200px', opacity: 1, transform: 'translate3d(0, 0, 0)' },
+    250
   );
+
+  useEffect(() => {
+    setTimeout(() => {
+      setV2(true);
+    }, 1000);
+  }, []);
 
   const [pos, setPos] = useState<any>({ left: '', top: '' });
 
@@ -159,6 +166,8 @@ export default function App() {
       </Button>
 
       <p>{active && <Block ref={ref1} onClick={() => setV1(false)} />}</p>
+
+      <p>{active2 && <Block ref={ref2} onClick={() => setV2(false)} />}</p>
     </div>
   );
 }
