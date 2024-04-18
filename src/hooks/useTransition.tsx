@@ -44,7 +44,8 @@ const applyStyleOrClsToElement = (
  * @param visible
  * @param from
  * @param to
- * @param duration
+ * @param duration ms
+ * @param delay  ms, default 0
  * @returns true if el is shown or in transition status
  */
 export default function useTransition(
@@ -52,7 +53,8 @@ export default function useTransition(
   visible: boolean,
   from: string | React.CSSProperties,
   to: string | React.CSSProperties,
-  duration = 220
+  duration = 220,
+  delay = 0
 ): boolean {
   const [active, setActive] = useState(visible);
   const latestEl = useLatest(el);
@@ -67,7 +69,7 @@ export default function useTransition(
         applyStyleOrClsToElement(el, fromRef.current, toRef.current);
         setTimeout(() => {
           setActive(false);
-        }, duration);
+        }, duration + delay);
       }
     }
   }, [visible]);
