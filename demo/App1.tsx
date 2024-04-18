@@ -47,6 +47,21 @@ export default function App() {
     });
   }, []);
 
+  const handlePkg = () => {
+    const p = placements[ref.current++] as any;
+
+    Popover.show({
+      anchor: elRef,
+      style: { background: '#666', color: '#fff' },
+      content: <StyledContent>{p}</StyledContent>,
+      placement: p,
+    });
+
+    if (ref.current > 11) {
+      ref.current = 0;
+    }
+  };
+
   return (
     <PageWrap>
       <DemoBlock title="普通" padding={40}>
@@ -77,23 +92,7 @@ export default function App() {
 
       <DemoBlock title="静态调用">
         <Space>
-          <Button
-            type="primary"
-            onClick={() => {
-              const p = placements[ref.current++] as any;
-
-              Popover.show({
-                anchor: elRef,
-                style: { background: '#666', color: '#fff' },
-                content: <StyledContent>{p}</StyledContent>,
-                placement: p,
-              });
-
-              if (ref.current > 11) {
-                ref.current = 0;
-              }
-            }}
-          >
+          <Button type="primary" onClick={handlePkg}>
             静态调用
           </Button>
 
@@ -108,7 +107,7 @@ export default function App() {
         </Space>
 
         <AutoCenter style={{ marginTop: 100 }}>
-          <img src={pkq} ref={elRef} />
+          <img src={pkq} ref={elRef} onClick={handlePkg} style={{ cursor: 'pointer' }} />
         </AutoCenter>
       </DemoBlock>
     </PageWrap>
