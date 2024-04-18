@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import useLatest from './useLatest';
 import useUpdateEffect from './useUpdateEffect';
 
@@ -83,15 +83,15 @@ export default function useTransition(
     };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = getElement(latestEl);
     if (visible) {
       applyStyleOrClsToElement(el, fromRef.current, toRef.current);
       setActive(true);
 
-      requestAnimationFrame(() => {
+      timerRef.current = window.setTimeout(() => {
         applyStyleOrClsToElement(el, toRef.current, fromRef.current);
-      });
+      }, 0);
     } else {
       if (active) {
         applyStyleOrClsToElement(el, fromRef.current, toRef.current);
