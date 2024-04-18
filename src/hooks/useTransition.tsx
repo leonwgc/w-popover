@@ -79,9 +79,7 @@ export default function useTransition(
       setActive(true);
 
       requestAnimationFrame(() => {
-        setTimeout(() => {
-          applyStyleOrClsToElement(el, toRef.current, fromRef.current);
-        }, 0);
+        applyStyleOrClsToElement(el, toRef.current, fromRef.current);
       });
     } else {
       if (active) {
