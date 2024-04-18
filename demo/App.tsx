@@ -39,13 +39,14 @@ export default function App() {
     v2,
     { width: '400px', height: '0px', opacity: 0, transform: 'translate3d(0, -20px, 0)' },
     { width: '400px', height: '200px', opacity: 1, transform: 'translate3d(0, 0, 0)' },
-    250
+    250,
+    1000
   );
 
   useEffect(() => {
     setTimeout(() => {
       setV2(true);
-    }, 1000);
+    }, 100);
   }, []);
 
   const [pos, setPos] = useState<any>({ left: '', top: '' });

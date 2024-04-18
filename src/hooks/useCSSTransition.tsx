@@ -44,8 +44,8 @@ const applyStyleOrClsToElement = (
  * @param visible
  * @param from
  * @param to
- * @param duration ms
- * @param delay  ms, default 0
+ * @param duration unit: ms
+ * @param delay  time to wait before animation. unit: ms
  * @returns true if el is shown or in transition status
  */
 export default function useCSSTransition(
@@ -59,18 +59,31 @@ export default function useCSSTransition(
   const [active, setActive] = useState(visible);
   const latestEl = useLatest(el);
   const timerRef = useRef(0);
-
   const fromRef = useLatest(from);
   const toRef = useLatest(to);
+
+  useLayoutEffect(() => {
+    const el = getElement(latestEl);
+    if (visible) {
+      applyStyleOrClsToElement(el, fromRef.current, toRef.current);
+      setActive(true);
+
+      timerRef.current = window.setTimeout(() => {
+        applyStyleOrClsToElement(el, toRef.current, fromRef.current);
+      }, delay);
+    }
+  }, [visible, active, fromRef, toRef, latestEl, delay]);
 
   useUpdateEffect(() => {
     if (!visible) {
       if (active) {
         const el = getElement(latestEl);
-        applyStyleOrClsToElement(el, fromRef.current, toRef.current);
         timerRef.current = window.setTimeout(() => {
-          setActive(false);
-        }, duration + delay);
+          applyStyleOrClsToElement(el, fromRef.current, toRef.current);
+          timerRef.current = window.setTimeout(() => {
+            setActive(false);
+          }, duration);
+        }, delay);
       }
     }
   }, [visible]);
@@ -82,22 +95,6 @@ export default function useCSSTransition(
       }
     };
   }, []);
-
-  useLayoutEffect(() => {
-    const el = getElement(latestEl);
-    if (visible) {
-      applyStyleOrClsToElement(el, fromRef.current, toRef.current);
-      setActive(true);
-
-      timerRef.current = window.setTimeout(() => {
-        applyStyleOrClsToElement(el, toRef.current, fromRef.current);
-      }, 0);
-    } else {
-      if (active) {
-        applyStyleOrClsToElement(el, fromRef.current, toRef.current);
-      }
-    }
-  }, [visible, active, fromRef, toRef, latestEl]);
 
   return active || visible;
 }
