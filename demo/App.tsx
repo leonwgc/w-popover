@@ -34,14 +34,14 @@ export default function App() {
 
   const active = useCSSTransition(ref1, v1, 'from', 'to', 250);
 
-  const active2 = useCSSTransition(
-    ref2,
-    v2,
-    { width: '400px', height: '0px', opacity: 0, transform: 'translate3d(0, -20px, 0)' },
-    { width: '400px', height: '200px', opacity: 1, transform: 'translate3d(0, 0, 0)' },
-    250,
-    1000
-  );
+  // const active2 = useCSSTransition(
+  //   ref2,
+  //   v2,
+  //   { width: '400px', height: '0px', opacity: 0, transform: 'translate3d(0, -20px, 0)' },
+  //   { width: '400px', height: '200px', opacity: 1, transform: 'translate3d(0, 0, 0)' },
+  //   250,
+  //   1000
+  // );
 
   useEffect(() => {
     setTimeout(() => {
@@ -137,7 +137,7 @@ export default function App() {
       </div>
 
       <Popover
-        placement="right-bottom"
+        placement="top"
         visible={v}
         onClose={() => setV(false)}
         content={<div style={{ width: 400, height: 200 }}>I'm here </div>}
@@ -146,6 +146,7 @@ export default function App() {
         }}
         closable
         mask
+        style={{ padding: 16 }}
       >
         <Button
           outlined
@@ -168,7 +169,7 @@ export default function App() {
 
       <p>{active && <Block ref={ref1} onClick={() => setV1(false)} />}</p>
 
-      <p>{active2 && <Block ref={ref2} onClick={() => setV2(false)} />}</p>
+      {/* <p>{active2 && <Block ref={ref2} onClick={() => setV2(false)} />}</p> */}
     </div>
   );
 }

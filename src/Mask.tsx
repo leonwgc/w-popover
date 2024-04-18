@@ -33,7 +33,7 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     visible,
     { opacity: 0 },
     { opacity: 0.5 },
-    200
+    300
   );
 
   useEffect(() => {
