@@ -17,7 +17,8 @@
   "scripts": {
     "prepare": "husky install",
     "lint-staged": "lint-staged",
-    "build": "father-build --cjs --esm && tsc"
+    "build": "father-build --cjs --esm && tsc",
+    "doc": "node pack --build"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
