@@ -56,7 +56,7 @@ export default function App() {
             placement={placements[ref.current] as any}
             visible={visible}
             onClose={() => setVisible(false)}
-            content={<StyledContent>hello</StyledContent>}
+            content={<StyledContent>{placements[ref.current]}</StyledContent>}
           >
             <Button
               type="primary"
