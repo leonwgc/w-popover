@@ -21,6 +21,30 @@ export const getElement = (elRef: React.MutableRefObject<TargetType>): HTMLEleme
 };
 
 /**
+ * Get event target.
+ * @param target
+ * @param defaultTarget
+ * @returns
+ */
+export const getEventTarget = (target, defaultTarget): Element => {
+  if (!target) {
+    return defaultTarget;
+  }
+
+  let targetElement;
+
+  if (typeof target === 'function') {
+    targetElement = target();
+  } else if (target && 'current' in target) {
+    targetElement = target.current;
+  } else {
+    targetElement = target;
+  }
+
+  return targetElement;
+};
+
+/**
  * Apply style / className to element.
  * @param el
  * @param styleOrCls

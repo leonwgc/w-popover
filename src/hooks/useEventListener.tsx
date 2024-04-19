@@ -1,40 +1,23 @@
 import { useEffect } from 'react';
-import useLatest from './useLatest';
 import { TargetType } from 'src/types';
-
-const getEventTarget = (target, defaultTarget) => {
-  if (!target) {
-    return defaultTarget;
-  }
-
-  let targetElement;
-
-  if (typeof target === 'function') {
-    targetElement = target();
-  } else if (target && 'current' in target) {
-    targetElement = target.current;
-  } else {
-    targetElement = target;
-  }
-
-  return targetElement;
-};
+import { getEventTarget } from './dom';
+import useLatest from './useLatest';
 
 /**
- * 事件监听
- *
+ * Add event listener for a target.
  * @export
- * @param {EventTargetType} target 绑定事件对象, 找不到则用window
- * @param {string}  事件类型
- * @param {(e:Event) => void} [handler] 事件处理
- * @param {(boolean | AddEventListenerOptions | undefined)} [options=undefined]
+ * @param {EventTargetType} target target elemenet, if not availabel, fallback to window.
+ * @param {string}  event  event type e.g. 'click'
+ * @param {(e:Event) => void} [handler] event handler
+ * @param {(boolean | AddEventListenerOptions | undefined)} [options=undefined] options of the 3rd parameter in addEventListener func.
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function useEventListener(
   target: TargetType,
   type: string,
   handler?: (e: Event) => void,
   options = undefined
-): any {
+) {
   const handlerRef = useLatest(handler);
   const typeRef = useLatest(type);
   const targetRef = useLatest(target);
