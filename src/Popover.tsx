@@ -9,7 +9,7 @@ import useEventListener from './hooks/useEventListener';
 import useLatest from './hooks/useLatest';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import { hide, show } from './show';
-import type { PopoverProps, attachPropertiesToComponent } from './types';
+import { PopoverProps, attachPropertiesToComponent } from './types';
 import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
 import { MARGIN, Offset } from './utils/getModalStyle';
 

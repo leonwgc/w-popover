@@ -10,7 +10,7 @@ pack(!isBuild, {
     index: `./demo/index`,
   },
   output: {
-    path: path.resolve(__dirname, 'docs'),
+    path: path.resolve(__dirname, !isBuild ? '.dev' : 'docs'),
     publicPath: '',
   },
   devServer: {
