@@ -1,13 +1,8 @@
 import React from 'react';
-import { Dispose, renderElement } from './dom';
 import Popover from './Popover';
-import { PopoverProps } from './types';
-
-export type Props = Omit<PopoverProps, 'children' | 'onVisibleChange' | 'closeOnClickOutside'> & {
-  left?: number | string;
-  top?: number | string;
-  anchor?: Element | string | React.MutableRefObject<Element>;
-};
+import { Dispose, renderElement } from './dom';
+import { isNumber } from './helper';
+import { ShowProps } from './types';
 
 let _hide;
 
@@ -21,16 +16,13 @@ export const hide = (): void => {
   }
 };
 
-const isNumber = (n) => {
-  return Object.prototype.toString.call(n) === '[object Number]' && n === n;
-};
 /**
  * Static method of Popover
  *
- * @param {Props} props
+ * @param {ShowProps} props
  * @return {*}  hide popover fun.
  */
-export const show = (props: Props): (() => void) => {
+export const show = (props: ShowProps): (() => void) => {
   const { left, top, placement = 'top', style, ...rest } = props;
   let anchor = props.anchor,
     x = left,
@@ -86,7 +78,7 @@ export const show = (props: Props): (() => void) => {
           visibility: 'hidden',
           pointerEvents: 'none',
         }}
-        className="uc-popover-anchor"
+        className="w-popover__anchor"
       />
     </Popover>,
     div

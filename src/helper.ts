@@ -1,5 +1,9 @@
 import type { MountContainerType, Placement } from './types';
 
+export const isNumber = (n) => {
+  return Object.prototype.toString.call(n) === '[object Number]' && n === n;
+};
+
 const isObject = (obj) => Object.prototype.toString.call(obj) === '[object Object]';
 /**
  * Get Popover mount container.

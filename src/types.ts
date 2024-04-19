@@ -114,3 +114,12 @@ export type EventTargetType =
   | EventTarget
   | React.MutableRefObject<EventTarget>
   | (() => EventTarget);
+
+export type ShowProps = Omit<
+  PopoverProps,
+  'children' | 'onVisibleChange' | 'closeOnClickOutside'
+> & {
+  left?: number | string;
+  top?: number | string;
+  anchor?: Element | string | React.MutableRefObject<Element>;
+};
