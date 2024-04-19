@@ -32,13 +32,14 @@ export default function App() {
   const [visible, setVisible] = useState(true);
 
   const ref = useRef(0);
+  const ref1 = useRef(0);
   const elRef = useRef();
   const btnRef = useRef();
 
   const forceRender = useForceUpdate();
 
   useEffect(() => {
-    const p = placements[ref.current++] as any;
+    const p = placements[ref.current] as any;
     Popover.show({
       anchor: elRef,
       style: { background: '#666', color: '#fff' },
@@ -48,7 +49,7 @@ export default function App() {
   }, []);
 
   const handlePkg = () => {
-    const p = placements[ref.current++] as any;
+    const p = placements[ref1.current++] as any;
 
     Popover.show({
       anchor: elRef,
@@ -57,8 +58,8 @@ export default function App() {
       placement: p,
     });
 
-    if (ref.current > 11) {
-      ref.current = 0;
+    if (ref1.current > 11) {
+      ref1.current = 0;
     }
   };
 
@@ -109,7 +110,7 @@ export default function App() {
         <AutoCenter style={{ marginTop: 100 }}>
           <img src={pkq} ref={elRef} onClick={handlePkg} style={{ cursor: 'pointer' }} />
         </AutoCenter>
-        <div style={{ height: '100vh' }}></div>
+        {/* <div style={{ height: '100vh' }}></div> */}
       </DemoBlock>
     </PageWrap>
   );

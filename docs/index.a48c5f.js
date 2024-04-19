@@ -834,27 +834,28 @@
           n = e[0],
           o = e[1],
           c = (0, r.useRef)(0),
-          l = (0, r.useRef)(),
+          l = (0, r.useRef)(0),
           p = (0, r.useRef)(),
-          d = (0, u.Z)();
+          d = (0, r.useRef)(),
+          m = (0, u.Z)();
         (0, r.useEffect)(function () {
-          var t = gt[c.current++];
+          var t = gt[c.current];
           rt.show({
-            anchor: l,
+            anchor: p,
             style: { background: '#666', color: '#fff' },
             content: r.createElement(vt, null, t),
             placement: t,
           });
         }, []);
-        var m = function () {
-          var t = gt[c.current++];
+        var h = function () {
+          var t = gt[l.current++];
           rt.show({
-            anchor: l,
+            anchor: p,
             style: { background: '#666', color: '#fff' },
             content: r.createElement(vt, null, t),
             placement: t,
           }),
-            c.current > 11 && (c.current = 0);
+            l.current > 11 && (l.current = 0);
         };
         return r.createElement(
           dt,
@@ -881,7 +882,7 @@
                   {
                     type: 'primary',
                     onClick: function () {
-                      o(!0), c.current++, c.current > 11 && (c.current = 0), d();
+                      o(!0), c.current++, c.current > 11 && (c.current = 0), m();
                     },
                   },
                   '点我试试'
@@ -895,11 +896,11 @@
             r.createElement(
               s.Z,
               null,
-              r.createElement(f.Z, { type: 'primary', onClick: m }, '静态调用'),
+              r.createElement(f.Z, { type: 'primary', onClick: h }, '静态调用'),
               r.createElement(
                 f.Z,
                 {
-                  ref: p,
+                  ref: d,
                   onClick: function () {
                     rt.hide();
                   },
@@ -910,9 +911,8 @@
             r.createElement(
               a.Z,
               { style: { marginTop: 100 } },
-              r.createElement('img', { src: ht, ref: l, onClick: m, style: { cursor: 'pointer' } })
-            ),
-            r.createElement('div', { style: { height: '100vh' } })
+              r.createElement('img', { src: ht, ref: p, onClick: h, style: { cursor: 'pointer' } })
+            )
           )
         );
       }
