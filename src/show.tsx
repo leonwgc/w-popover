@@ -1,16 +1,11 @@
-/* eslint-disable prefer-const */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import React from 'react';
 import { Dispose, renderElement } from './dom';
 import Popover from './Popover';
-import type { Props as PopoverProps } from './Popover';
+import { PopoverProps } from './types';
 
 export type Props = Omit<PopoverProps, 'children' | 'onVisibleChange' | 'closeOnClickOutside'> & {
-  /** 定位坐标 left */
   left?: number | string;
-  /** 定位坐标 top */
   top?: number | string;
-  /** 定位元素 or querySelector选择器 or ref */
   anchor?: Element | string | React.MutableRefObject<Element>;
 };
 
@@ -20,7 +15,7 @@ let _hide;
  *  关闭popover
  *
  */
-export const hide = () => {
+export const hide = (): void => {
   if (typeof _hide === 'function') {
     _hide();
   }
@@ -36,7 +31,10 @@ const isNumber = (n) => {
  * @return {*}  hide popover fun.
  */
 export const show = (props: Props): (() => void) => {
-  let { left: x, top: y, anchor, placement = 'top', style, ...rest } = props;
+  const { left, top, placement = 'top', style, ...rest } = props;
+  let anchor = props.anchor,
+    x = left,
+    y = top;
 
   const div = document.createElement('div');
 
