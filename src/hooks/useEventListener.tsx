@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import useLatest from './useLatest';
+import { TargetType } from 'src/types';
 
 const getEventTarget = (target, defaultTarget) => {
   if (!target) {
@@ -29,12 +30,11 @@ const getEventTarget = (target, defaultTarget) => {
  * @param {(boolean | AddEventListenerOptions | undefined)} [options=undefined]
  */
 export default function useEventListener(
-  target,
+  target: TargetType,
   type: string,
   handler?: (e: Event) => void,
-  // eslint-disable-next-line no-undef
   options = undefined
-) {
+): any {
   const handlerRef = useLatest(handler);
   const typeRef = useLatest(type);
   const targetRef = useLatest(target);

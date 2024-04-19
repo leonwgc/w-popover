@@ -107,3 +107,10 @@ export type PopoverProps = {
    */
   transitionDuration?: number;
 };
+
+export type TargetType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
+
+export type EventTargetType =
+  | EventTarget
+  | React.MutableRefObject<EventTarget>
+  | (() => EventTarget);

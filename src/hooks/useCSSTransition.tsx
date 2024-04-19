@@ -1,42 +1,7 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import useLatest from './useLatest';
 import useUpdateEffect from './useUpdateEffect';
-
-const getElement = (elRef) => {
-  const el = elRef.current;
-  let dom;
-  if (el instanceof Element) {
-    dom = el;
-  } else if (el.current) {
-    dom = el.current;
-  } else if (typeof el === 'function') {
-    dom = el();
-  }
-
-  return dom;
-};
-
-const applyStyleOrClsToElement = (
-  el: HTMLElement,
-  styleOrCls: React.CSSProperties | string,
-  toBeRemovedCls
-) => {
-  if (typeof styleOrCls === 'object' && styleOrCls) {
-    for (const key of Object.keys(styleOrCls)) {
-      el.style[key] = styleOrCls[key];
-    }
-  } else if (typeof styleOrCls === 'string') {
-    el.classList.add(styleOrCls);
-
-    if (
-      typeof toBeRemovedCls === 'string' &&
-      toBeRemovedCls &&
-      el.classList.contains(toBeRemovedCls)
-    ) {
-      el.classList.remove(toBeRemovedCls);
-    }
-  }
-};
+import { getElement, applyStyleOrClsToElement } from './dom';
 
 /**
  * Apply transition effect to el
@@ -49,7 +14,7 @@ const applyStyleOrClsToElement = (
  * @returns true if el is shown or in transition status
  */
 export default function useCSSTransition(
-  el: Element | (() => Element) | React.MutableRefObject<Element>,
+  el: HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>,
   visible: boolean,
   from: string | React.CSSProperties,
   to: string | React.CSSProperties,
