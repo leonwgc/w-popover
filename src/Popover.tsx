@@ -3,121 +3,22 @@ import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useSta
 import ReactDOM from 'react-dom';
 import IconClose from './IconClose';
 import Mask from './Mask';
+import { getMountContainer, getTransformPosition } from './helper';
 import useCSSTransition from './hooks/useCSSTransition';
 import useEventListener from './hooks/useEventListener';
 import useLatest from './hooks/useLatest';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import { hide, show } from './show';
-import { Placement, attachPropertiesToComponent } from './types';
+import type { PopoverProps, attachPropertiesToComponent } from './types';
 import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
 import { MARGIN, Offset } from './utils/getModalStyle';
 
-type MountContainerType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
-const isObject = (obj) => Object.prototype.toString.call(obj) === '[object Object]';
-/**
- *
- *
- * @param {MountContainerType} container
- * @return {*}  {HTMLElement}
- */
-export const getMountContainer = (container: MountContainerType): HTMLElement => {
-  let mountNode;
-
-  if (container instanceof HTMLElement) {
-    mountNode = container;
-  } else if (isObject(container) && 'current' in container) {
-    mountNode = container.current;
-  } else if (typeof container === 'function') {
-    mountNode = container?.();
-  }
-
-  return mountNode;
-};
-
-const aniMap = {
-  top: 'bottom',
-  bottom: 'top',
-  left: 'right',
-  right: 'left',
-};
-
-const getTransformPosition = (placement) => {
-  const pos = placement.split('-');
-
-  let ret = '';
-
-  if (pos[0]) {
-    ret += aniMap[pos[0]];
-  }
-
-  if (pos[1]) {
-    ret += ' ' + pos[1];
-  }
-
-  return ret;
-};
-
-export type Props = {
-  /** 弹框位置,默认bottom */
-  placement?: Placement;
-  /** 触发元素，如果是组件，需要forwardRef到dom */
-  children: React.ReactElement;
-  /** 弹框内容 */
-  content?: React.ReactNode;
-  /** 弹框内容是否显示 */
-  visible?: boolean;
-  /** visible状态变化回调 */
-  onVisibleChange?: (visible: boolean) => void;
-  /** arrow是否显示 */
-  arrow?: boolean;
-  /** 关闭按钮是否显示 */
-  closable?: boolean;
-  /** container style */
-  style?: React.CSSProperties;
-  /**  关闭回调 */
-  onClose?: () => void;
-  className?: string;
-  /** 是否显示遮罩 */
-  mask?: boolean;
-  /** 遮罩样式 */
-  maskStyle?: React.CSSProperties;
-  /** 遮罩class*/
-  maskClass?: string;
-  /** 弹框自定义偏移 */
-  offset?: Offset;
-  /**
-   * 弹框挂载节点
-   * @default document.body
-   */
-  mountContainer?: MountContainerType;
-  /**
-   * 点击外部区域是否关闭
-   * @default true
-   * */
-  closeOnClickOutside?: boolean;
-  /**
-   * 点击遮罩是否关闭
-   * @default true
-   * */
-  closeOnMaskClick?: boolean;
-  /**
-   * transition on / off
-   * @default true
-   *  */
-  transition?: boolean;
-  /**
-   *  transitionDuration 200
-   */
-  transitionDuration?: number;
-};
-
 /**
  * React Popover
- *
- * @param {Props} props
- * @return {*}  {React.ReactElement}
+ * @param {PopoverProps} props
+ * @return {*}
  */
-const Popover = (props: Props): React.ReactElement => {
+const Popover = (props: PopoverProps): React.ReactElement => {
   const {
     placement = 'bottom',
     content,
@@ -182,7 +83,7 @@ const Popover = (props: Props): React.ReactElement => {
         el.style.opacity = '0';
         el.style.transform = 'scale(0)';
 
-        // trigger the browser to synchronously calculate the style and layout*. This is also called reflow or layout thrashing
+        // trigger the browser to synchronously calculate the style and layout, to trigger reflow aka layout thrashing
         el.offsetHeight;
         el.style.transitionProperty = 'transform, opacity';
         el.style.visibility = 'visible';
@@ -221,8 +122,6 @@ const Popover = (props: Props): React.ReactElement => {
       mountedRef.current = false;
     }
   }, [visible, calculateStyle]);
-
-  useEventListener(() => window, 'resize');
 
   const closeOutsideHandler = useCallback(
     (e) => {
@@ -280,7 +179,6 @@ const Popover = (props: Props): React.ReactElement => {
                 ...style,
               }}
             >
-              {/* arrow */}
               {arrow && (
                 <div
                   className={clsx('w-popover__arrow')}
@@ -296,7 +194,6 @@ const Popover = (props: Props): React.ReactElement => {
                 />
               )}
 
-              {/* close */}
               {closable && (
                 <IconClose
                   className={clsx('w-popover__close')}
