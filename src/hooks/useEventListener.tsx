@@ -1,19 +1,19 @@
 import { useEffect } from 'react';
-import { TargetType } from 'src/types';
 import { getEventTarget } from './dom';
 import useLatest from './useLatest';
+import { EventTargetType } from 'src/types';
 
 /**
  * Add event listener for a target.
  * @export
- * @param {EventTargetType} target target elemenet, if not availabel, fallback to window.
+ * @param {EventTarget} target target elemenet, if not availabel, fallback to window.
  * @param {string}  event  event type e.g. 'click'
  * @param {(e:Event) => void} [handler] event handler
  * @param {(boolean | AddEventListenerOptions | undefined)} [options=undefined] options of the 3rd parameter in addEventListener func.
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export default function useEventListener(
-  target: TargetType,
+  target: EventTargetType,
   type: string,
   handler?: (e: Event) => void,
   options = undefined

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import IconClose from './IconClose';
 import Mask from './Mask';
@@ -11,7 +11,7 @@ import useUpdateEffect from './hooks/useUpdateEffect';
 import { hide, show } from './show';
 import { PopoverProps, attachPropertiesToComponent } from './types';
 import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
-import { MARGIN, Offset } from './utils/getModalStyle';
+import { MARGIN } from './utils/getModalStyle';
 
 /**
  * React Popover
@@ -45,15 +45,11 @@ const Popover = (props: PopoverProps): React.ReactElement => {
   const anchorRef = useRef<HTMLElement>();
   const popoverRef = useRef<HTMLDivElement>(null);
   const resizeTimerRef = useRef<number>(0);
-  const offsetRef = useRef<Offset>(offset);
+  const offsetRef = useLatest(offset);
   const onCloseRef = useLatest(onClose);
   const [arrowStyle, setArrowStyle] = useState({});
   const mountNode = getMountContainer(mountContainer);
   const mountedRef = useRef(false);
-
-  useEffect(() => {
-    offsetRef.current = offset;
-  }, [offset]);
 
   useUpdateEffect(() => {
     onVisibleChange?.(visible);
@@ -83,14 +79,15 @@ const Popover = (props: PopoverProps): React.ReactElement => {
         el.style.opacity = '0';
         el.style.transform = 'scale(0)';
 
-        // trigger the browser to synchronously calculate the style and layout, to trigger reflow aka layout thrashing
+        // trigger the browser to synchronously calculate the style and layout
+        // aka trigger reflow / layout thrashing
         el.offsetHeight;
         el.style.transitionProperty = 'transform, opacity';
         el.style.visibility = 'visible';
       }
       setArrowStyle(arrowStyle);
     },
-    [transition, placement]
+    [transition, placement, offsetRef]
   );
 
   const handleResize = () => {
