@@ -10,7 +10,7 @@ import React from 'react';
  * @returns true if el is shown or in transition status
  */
 export default function useCSSTransition(
-  el: Element | (() => Element) | React.MutableRefObject<Element>,
+  el: HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>,
   visible: boolean,
   from: string | React.CSSProperties,
   to: string | React.CSSProperties,

@@ -1,14 +1,14 @@
+import { EventTargetType } from 'src/types';
 /**
- * 事件监听
- *
+ * Add event listener for a target.
  * @export
- * @param {EventTargetType} target 绑定事件对象, 找不到则用window
- * @param {string}  事件类型
- * @param {(e:Event) => void} [handler] 事件处理
- * @param {(boolean | AddEventListenerOptions | undefined)} [options=undefined]
+ * @param {EventTarget} target target elemenet, if not availabel, fallback to window.
+ * @param {string}  event  event type e.g. 'click'
+ * @param {(e:Event) => void} [handler] event handler
+ * @param {(boolean | AddEventListenerOptions | undefined)} [options=undefined] options of the 3rd parameter in addEventListener func.
  */
 export default function useEventListener(
-  target: any,
+  target: EventTargetType,
   type: string,
   handler?: (e: Event) => void,
   options?: any

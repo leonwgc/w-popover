@@ -2,7 +2,7 @@
 (self.webpackChunkw_popover = self.webpackChunkw_popover || []).push([
   [826],
   {
-    194: (t, e, n) => {
+    226: (t, e, n) => {
       var r = n(294),
         o = n(745),
         i = n(152),
@@ -33,12 +33,11 @@
         };
       b.displayName = 'Close';
       const y = b;
-      var w = n(2);
-      function O(t) {
+      function w(t) {
         var e = (0, r.useRef)(t);
         return (e.current = t), e;
       }
-      const E = function (t) {
+      const O = function (t) {
         var e = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : [],
           n = (0, r.useRef)(!1);
         (0, r.useEffect)(function () {
@@ -46,11 +45,12 @@
           n.current = !0;
         }, e);
       };
-      var x = function (t) {
+      var E = n(2),
+        x = function (t) {
           var e,
             n = t.current;
           return (
-            n instanceof Element
+            n instanceof HTMLElement
               ? (e = n)
               : n.current
               ? (e = n.current)
@@ -58,8 +58,11 @@
             e
           );
         },
-        j = function (t, e, n) {
-          if ('object' === (0, w.Z)(e) && e)
+        j = function (t, e) {
+          return t ? ('function' == typeof t ? t() : t && 'current' in t ? t.current : t) : e;
+        },
+        k = function (t, e, n) {
+          if ('object' === (0, E.Z)(e) && e)
             for (var r = 0, o = Object.keys(e); r < o.length; r++) {
               var i = o[r];
               t.style[i] = e[i];
@@ -69,36 +72,36 @@
               (t.classList.add(e),
               'string' == typeof n && n && t.classList.contains(n) && t.classList.remove(n));
         };
-      function k(t, e, n, o) {
+      function C(t, e, n, o) {
         var c = arguments.length > 4 && void 0 !== arguments[4] ? arguments[4] : 220,
           l = arguments.length > 5 && void 0 !== arguments[5] ? arguments[5] : 0,
           u = (0, r.useState)(e),
           a = (0, i.Z)(u, 2),
           f = a[0],
           s = a[1],
-          p = O(t),
+          p = w(t),
           d = (0, r.useRef)(0),
-          m = O(n),
-          h = O(o);
+          m = w(n),
+          h = w(o);
         return (
           (0, r.useLayoutEffect)(
             function () {
               var t = x(p);
               e &&
-                (j(t, m.current, h.current),
+                (k(t, m.current, h.current),
                 s(!0),
                 (d.current = window.setTimeout(function () {
-                  j(t, h.current, m.current);
+                  k(t, h.current, m.current);
                 }, l)));
             },
             [e, f, m, h, p, l]
           ),
-          E(
+          O(
             function () {
               if (!e && f) {
                 var t = x(p);
                 d.current = window.setTimeout(function () {
-                  j(t, m.current, h.current),
+                  k(t, m.current, h.current),
                     (d.current = window.setTimeout(function () {
                       s(!1);
                     }, c));
@@ -115,8 +118,8 @@
           f || e
         );
       }
-      var C = ['children', 'visible', 'style', 'hideOverflow'];
-      function Z(t, e) {
+      var Z = ['children', 'visible', 'style', 'hideOverflow'];
+      function P(t, e) {
         var n = Object.keys(t);
         if (Object.getOwnPropertySymbols) {
           var r = Object.getOwnPropertySymbols(t);
@@ -128,34 +131,34 @@
         }
         return n;
       }
-      function P(t) {
+      function S(t) {
         for (var e = 1; e < arguments.length; e++) {
           var n = null != arguments[e] ? arguments[e] : {};
           e % 2
-            ? Z(Object(n), !0).forEach(function (e) {
+            ? P(Object(n), !0).forEach(function (e) {
                 (0, d.Z)(t, e, n[e]);
               })
             : Object.getOwnPropertyDescriptors
             ? Object.defineProperties(t, Object.getOwnPropertyDescriptors(n))
-            : Z(Object(n)).forEach(function (e) {
+            : P(Object(n)).forEach(function (e) {
                 Object.defineProperty(t, e, Object.getOwnPropertyDescriptor(n, e));
               });
         }
         return t;
       }
-      var S = r.forwardRef(function (t, e) {
+      var N = r.forwardRef(function (t, e) {
         var n = t.children,
           o = t.visible,
           i = t.style,
           c = t.hideOverflow,
           l = void 0 === c || c,
-          u = (0, m.Z)(t, C),
+          u = (0, m.Z)(t, Z),
           a = (0, r.useRef)(null),
           f = (0, r.useRef)('');
         (0, r.useImperativeHandle)(e, function () {
           return a.current;
         });
-        var s = k(
+        var s = C(
           function () {
             return a.current;
           },
@@ -181,8 +184,8 @@
             r.createElement(
               'div',
               (0, p.Z)({ ref: a }, u, {
-                style: P(
-                  P({}, i),
+                style: S(
+                  S({}, i),
                   {},
                   {
                     opacity: 0,
@@ -204,20 +207,20 @@
             )
         );
       });
-      S.displayName = 'UC-Mask';
-      const N = S;
-      var R = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' },
-        D = function (t, e) {
-          return t ? ('function' == typeof t ? t() : t && 'current' in t ? t.current : t) : e;
-        };
-      function L(t, e, n) {
+      N.displayName = 'UC-Mask';
+      const R = N;
+      var D = function (t) {
+          return '[object Number]' === Object.prototype.toString.call(t) && t == t;
+        },
+        L = { top: 'bottom', bottom: 'top', left: 'right', right: 'left' };
+      function M(t, e, n) {
         var o = arguments.length > 3 && void 0 !== arguments[3] ? arguments[3] : void 0,
-          i = O(n),
-          c = O(e),
-          l = O(t),
-          u = O(o);
+          i = w(n),
+          c = w(e),
+          l = w(t),
+          u = w(o);
         (0, r.useEffect)(function () {
-          var t = D(l.current, window);
+          var t = j(l.current, window);
           if (null != t && t.addEventListener) {
             var e = function (t) {
                 var e;
@@ -235,11 +238,8 @@
         }, []);
       }
       'undefined' == typeof window || window;
-      var M,
-        T = ['left', 'top', 'anchor', 'placement', 'style'],
-        z = function (t) {
-          return '[object Number]' === Object.prototype.toString.call(t) && t == t;
-        },
+      var T,
+        z = ['left', 'top', 'placement', 'style'],
         H = function (t) {
           if ('[object Window]' !== t.toString()) {
             var e = t.ownerDocument;
@@ -247,19 +247,19 @@
           }
           return t;
         },
-        B = function (t) {
+        _ = function (t) {
           return (function (t) {
             return (q(t) ? t.ownerDocument : t.document) || window.document;
           })(t).documentElement;
         },
-        F = function (t) {
+        B = function (t) {
           return H(t).getComputedStyle(t);
         },
-        I = function (t) {
+        F = function (t) {
           return t ? (t.nodeName || '').toLowerCase() : '';
         },
-        _ = function (t) {
-          return t && 'html' !== I(t) ? t.assignedSlot || t.parentNode || B(t) : t;
+        I = function (t) {
+          return t && 'html' !== F(t) ? t.assignedSlot || t.parentNode || _(t) : t;
         },
         q = function (t) {
           return t instanceof H(t).Element || t instanceof Element;
@@ -268,10 +268,10 @@
           return t instanceof H(t).HTMLElement || t instanceof HTMLElement;
         },
         V = function (t) {
-          return ['table', 'td', 'th'].indexOf(I(t)) >= 0;
+          return ['table', 'td', 'th'].indexOf(F(t)) >= 0;
         },
         Y = function (t) {
-          return A(t) && 'fixed' !== F(t).position ? t.offsetParent : null;
+          return A(t) && 'fixed' !== B(t).position ? t.offsetParent : null;
         },
         J = function (t) {
           var e = 0;
@@ -279,21 +279,21 @@
             (function (t, e) {
               var n = H(t);
               null == e || e(t);
-              for (var r = Y(t); r && V(r) && 'static' === F(r).position; )
+              for (var r = Y(t); r && V(r) && 'static' === B(r).position; )
                 null == e || e(r), (r = Y(r));
               r ||
                 (function (t, e) {
                   null == e || e(t);
-                  for (var n = _(t); A(n) && ['html', 'body'].indexOf(I(n)) < 0; ) {
+                  for (var n = I(t); A(n) && ['html', 'body'].indexOf(F(n)) < 0; ) {
                     null == e || e(n);
-                    var r = F(n);
+                    var r = B(n);
                     if (
                       'none' !== r.transform ||
                       'none' !== r.perspective ||
                       (r.willChange && 'auto' !== r.willChange)
                     )
                       return n;
-                    n = _(n);
+                    n = I(n);
                   }
                 })(t, e);
             })(t, function (t) {
@@ -309,8 +309,8 @@
             c = t.getBoundingClientRect(),
             l = e.getBoundingClientRect(),
             u = n.getBoundingClientRect(),
-            a = 'body' === I(n),
-            f = 'fixed' === F(e).position,
+            a = 'body' === F(n),
+            f = 'fixed' === B(e).position,
             s = f ? l.top : a ? l.top + window.pageYOffset : J(e),
             p = s,
             d = l.height + s,
@@ -394,13 +394,13 @@
           );
         },
         $ = function (t, e) {
-          for (var n = _(t); A(n) && ['html', 'body'].indexOf(I(n)) < 0; ) {
-            var r = F(n).overflowY,
+          for (var n = I(t); A(n) && ['html', 'body'].indexOf(F(n)) < 0; ) {
+            var r = B(n).overflowY,
               o = 'visible' !== r && 'hidden' !== r;
             if ((null == e || e(n), o && n.scrollHeight > n.clientHeight)) return n;
             n = n.parentNode;
           }
-          return B(t);
+          return _(t);
         },
         tt = [
           'placement',
@@ -464,27 +464,27 @@
             d = t.className,
             g = t.style,
             b = t.children,
-            w = t.mask,
+            E = t.mask,
             x = t.maskStyle,
             j = t.maskClass,
-            C = t.mountContainer,
-            Z = void 0 === C ? document.body : C,
+            k = t.mountContainer,
+            Z = void 0 === k ? document.body : k,
             P = t.closeOnClickOutside,
             S = void 0 === P || P,
-            D = t.closeOnMaskClick,
-            M = void 0 === D || D,
+            N = t.closeOnMaskClick,
+            D = void 0 === N || N,
             T = t.transition,
             z = void 0 === T || T,
             H = t.transitionDuration,
-            B = void 0 === H ? 200 : H,
-            F = t.offset,
-            I = void 0 === F ? {} : F,
-            _ = (0, m.Z)(t, tt),
+            _ = void 0 === H ? 200 : H,
+            B = t.offset,
+            F = void 0 === B ? {} : B,
+            I = (0, m.Z)(t, tt),
             q = (0, r.useRef)(),
             A = (0, r.useRef)(null),
             V = (0, r.useRef)(0),
-            Y = (0, r.useRef)(I),
-            J = O(s),
+            Y = w(F),
+            J = w(s),
             G = (0, r.useState)({}),
             K = (0, i.Z)(G, 2),
             Q = K[0],
@@ -502,18 +502,12 @@
               );
             })(Z),
             ot = (0, r.useRef)(!1);
-          (0, r.useEffect)(
+          O(
             function () {
-              Y.current = I;
+              null == f || f(u);
             },
-            [I]
-          ),
-            E(
-              function () {
-                null == f || f(u);
-              },
-              [u]
-            );
+            [u]
+          );
           var it = r.useCallback(
               function (t, e) {
                 var r = arguments.length > 2 && void 0 !== arguments[2] && arguments[2],
@@ -534,7 +528,7 @@
                     (o.style.visibility = 'visible')),
                   et(c);
               },
-              [z, n]
+              [z, n, Y]
             ),
             ct = function () {
               var t = q.current,
@@ -545,14 +539,14 @@
                   it(t, e);
                 }));
             };
-          L(
+          M(
             function () {
               return window;
             },
             'resize',
             u ? ct : null
           ),
-            L(
+            M(
               function () {
                 return window;
               },
@@ -581,7 +575,7 @@
             },
             [J]
           );
-          L(
+          M(
             function () {
               return document;
             },
@@ -593,29 +587,29 @@
                 return (function (t) {
                   var e = t.split('-'),
                     n = '';
-                  return e[0] && (n += R[e[0]]), e[1] && (n += ' ' + e[1]), n;
+                  return e[0] && (n += L[e[0]]), e[1] && (n += ' ' + e[1]), n;
                 })(n);
               },
               [n]
             ),
-            at = k(
+            at = C(
               function () {
                 return A.current;
               },
               u,
               { opacity: 0, transform: 'scale(0)' },
               { opacity: 1, transform: 'scale(1)' },
-              B
+              _
             );
           return r.createElement(
             r.Fragment,
             null,
-            r.createElement(N, {
-              visible: w && u,
+            r.createElement(R, {
+              visible: E && u,
               className: j,
               style: x,
               onClick: function () {
-                M && (null == s || s());
+                D && (null == s || s());
               },
             }),
             r.cloneElement(b, { ref: q }),
@@ -626,7 +620,7 @@
                 at &&
                   r.createElement(
                     'div',
-                    (0, p.Z)({}, _, {
+                    (0, p.Z)({}, I, {
                       ref: A,
                       className: (0, h.Z)(d, 'w-popover'),
                       style: nt(
@@ -635,7 +629,7 @@
                           background: '#fff',
                           zIndex: 1e3,
                           transformOrigin: ut,
-                          transitionDuration: ''.concat(B, 'ms'),
+                          transitionDuration: ''.concat(_, 'ms'),
                           transitionProperty: 'none',
                           willChange: 'transform, opacity',
                         },
@@ -688,28 +682,30 @@
           var e,
             n = t.left,
             o = t.top,
-            i = t.anchor,
-            c = t.placement,
-            l = void 0 === c ? 'top' : c,
-            u = t.style,
-            a = (0, m.Z)(t, T),
-            f = document.createElement('div');
-          M && (null === (e = M) || void 0 === e || e());
-          var s = 0,
-            d = 0;
-          if (!z(n) || !z(o)) {
-            if (!i) throw Error('no anchor / left,top');
+            i = t.placement,
+            c = void 0 === i ? 'top' : i,
+            l = t.style,
+            u = (0, m.Z)(t, z),
+            a = t.anchor,
+            f = n,
+            s = o,
+            d = document.createElement('div');
+          T && (null === (e = T) || void 0 === e || e());
+          var h = 0,
+            g = 0;
+          if (!D(f) || !D(s)) {
+            if (!a) throw Error('no anchor / left,top');
             if (
-              ('string' == typeof i
-                ? (i = document.querySelector(i))
-                : 'current' in i && (i = i.current),
-              !(i instanceof Element))
+              ('string' == typeof a
+                ? (a = document.querySelector(a))
+                : 'current' in a && (a = a.current),
+              !(a instanceof Element))
             )
               throw Error('no anchor found');
-            var h = i.getBoundingClientRect();
-            (n = h.left), (o = h.top), (s = h.width), (d = h.height);
+            var b = a.getBoundingClientRect();
+            (f = b.left), (s = b.top), (h = b.width), (g = b.height);
           }
-          var g = (function (t, e) {
+          var y = (function (t, e) {
             var n = e || document.createElement('div');
             document.body.appendChild(n), v.render(t, n);
             var r = function () {
@@ -725,34 +721,34 @@
                 {
                   closeOnClickOutside: !1,
                   onClose: function () {
-                    return g();
+                    return y();
                   },
                   visible: !0,
                   transition: !1,
-                  style: u,
-                  placement: l,
+                  style: l,
+                  placement: c,
                 },
-                a
+                u
               ),
               r.createElement('span', {
                 style: {
                   position: 'fixed',
-                  left: n,
-                  top: o,
-                  width: s,
-                  height: d,
+                  left: f,
+                  top: s,
+                  width: h,
+                  height: g,
                   visibility: 'hidden',
                   pointerEvents: 'none',
                 },
-                className: 'uc-popover-anchor',
+                className: 'w-popover__anchor',
               })
             ),
-            f
+            d
           );
-          return (M = g), g;
+          return (T = y), y;
         },
         hide: function () {
-          'function' == typeof M && M();
+          'function' == typeof T && T();
         },
       });
       var ot,
@@ -833,7 +829,7 @@
           'right-bottom',
         ];
       function bt() {
-        var t = (0, r.useState)(!1),
+        var t = (0, r.useState)(!0),
           e = (0, i.Z)(t, 2),
           n = e[0],
           o = e[1],
@@ -915,7 +911,8 @@
               a.Z,
               { style: { marginTop: 100 } },
               r.createElement('img', { src: ht, ref: l, onClick: m, style: { cursor: 'pointer' } })
-            )
+            ),
+            r.createElement('div', { style: { height: '100vh' } })
           )
         );
       }
@@ -926,6 +923,6 @@
     },
   },
   (t) => {
-    t.O(0, [736], () => (194, t((t.s = 194)))), t.O();
+    t.O(0, [736], () => (226, t((t.s = 226)))), t.O();
   },
 ]);

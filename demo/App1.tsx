@@ -29,7 +29,7 @@ const placements = [
 ];
 
 export default function App() {
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   const ref = useRef(0);
   const elRef = useRef();
@@ -109,6 +109,7 @@ export default function App() {
         <AutoCenter style={{ marginTop: 100 }}>
           <img src={pkq} ref={elRef} onClick={handlePkg} style={{ cursor: 'pointer' }} />
         </AutoCenter>
+        <div style={{ height: '100vh' }}></div>
       </DemoBlock>
     </PageWrap>
   );
