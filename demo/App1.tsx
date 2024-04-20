@@ -5,6 +5,7 @@ import Popover from '../src/Popover';
 import DemoBlock from './DemoBlock';
 import PageWrap from './PageWrap';
 import pkq from './images/pkq.png';
+import Tooltip from './Tooltip';
 
 const StyledContent = styled.div`
   width: 100px;
@@ -36,6 +37,8 @@ export default function App() {
   const ref1 = useRef(0);
   const elRef = useRef();
   const btnRef = useRef();
+
+  const [index, setIndex] = useState(0);
 
   const forceRender = useForceUpdate();
 
@@ -69,6 +72,7 @@ export default function App() {
       <DemoBlock title="普通" padding={40}>
         <AutoCenter>
           <Popover
+            // transition={false}
             style={{ background: '#000', color: '#fff', padding: 0 }}
             placement={placements[ref.current] as any}
             visible={visible}
@@ -80,16 +84,36 @@ export default function App() {
               style={{ height: 80, width: 160 }}
               onClick={() => {
                 setVisible(true);
+
                 ref.current++;
                 if (ref.current > 11) {
                   ref.current = 0;
                 }
+
                 forceRender();
               }}
             >
-              点我试试
+              Try to click me
             </Button>
           </Popover>
+        </AutoCenter>
+      </DemoBlock>
+
+      <DemoBlock title="Tooltip">
+        <AutoCenter>
+          <Space>
+            <Tooltip title={`This's a tooltip `} placement={'top'}>
+              <Button type="primary">Tooltip at top</Button>
+            </Tooltip>
+
+            <Tooltip title={`This's a tooltip `} placement={'bottom'}>
+              <Button type="primary">Tooltip at bottom</Button>
+            </Tooltip>
+
+            <Tooltip title={`This's a tooltip `} placement={'right'}>
+              <Button type="primary">Tooltip at right</Button>
+            </Tooltip>
+          </Space>
         </AutoCenter>
       </DemoBlock>
 
@@ -112,7 +136,7 @@ export default function App() {
         <AutoCenter style={{ marginTop: 100 }}>
           <img src={pkq} ref={elRef} onClick={handlePkg} style={{ cursor: 'pointer' }} />
         </AutoCenter>
-        {/* <div style={{ height: '100vh' }}></div> */}
+        <div style={{ height: '10vh' }}></div>
       </DemoBlock>
     </PageWrap>
   );

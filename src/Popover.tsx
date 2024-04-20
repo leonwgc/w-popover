@@ -61,6 +61,8 @@ const Popover = (props: PopoverProps): React.ReactElement => {
     (anchorEl, scrollContainer, isFirstMount = false) => {
       const el = popoverRef.current;
 
+      applyStyleOrClsToElement(el, { transitionProperty: 'none', transform: 'none' });
+
       const modalStyle = getModalStyle(
         el,
         anchorEl,
@@ -72,7 +74,6 @@ const Popover = (props: PopoverProps): React.ReactElement => {
       const arrowStyle = getArrowStyle(el, placement, MARGIN);
 
       applyStyleOrClsToElement(el, {
-        transitionProperty: 'none',
         top: modalStyle.top + 'px',
         left: modalStyle.left + 'px',
         position: modalStyle.position,
@@ -141,7 +142,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
   }, [placement]);
 
   const active = useCSSTransition(
-    () => popoverRef.current,
+    () => (transition ? popoverRef.current : null),
     visible,
     transformFrom,
     transformTo,
@@ -166,7 +167,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
 
       {ReactDOM.createPortal(
         <>
-          {active && (
+          {((transition && active) || (!transition && visible)) && (
             <div
               {...rest}
               ref={popoverRef}
@@ -177,8 +178,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
                 zIndex: 1000,
                 transformOrigin,
                 transitionDuration: `${transitionDuration}ms`,
-                transitionProperty: 'none',
-                willChange: transitionProperty,
+                willChange: transition ? transitionProperty : 'unset',
                 ...style,
               }}
             >

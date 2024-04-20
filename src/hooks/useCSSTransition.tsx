@@ -29,7 +29,7 @@ export default function useCSSTransition(
 
   useLayoutEffect(() => {
     const el = getElement(latestEl);
-    if (visible) {
+    if (visible && el instanceof Element) {
       applyStyleOrClsToElement(el, fromRef.current, toRef.current);
       setActive(true);
 
