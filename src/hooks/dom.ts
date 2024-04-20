@@ -53,7 +53,7 @@ export const getEventTarget = (target, defaultTarget): Element => {
 export const applyStyleOrClsToElement = (
   el: HTMLElement,
   styleOrCls: React.CSSProperties | string,
-  toBeRemovedCls: React.CSSProperties | string
+  toBeRemovedCls?: React.CSSProperties | string
 ): void => {
   if (typeof styleOrCls === 'object' && styleOrCls) {
     for (const key of Object.keys(styleOrCls)) {

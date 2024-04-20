@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import IconClose from './IconClose';
 import Mask from './Mask';
 import { getMountContainer, getTransformPosition } from './helper';
+import { applyStyleOrClsToElement } from './hooks/dom';
 import useCSSTransition from './hooks/useCSSTransition';
 import useEventListener from './hooks/useEventListener';
 import useLatest from './hooks/useLatest';
@@ -13,6 +14,10 @@ import { PopoverProps, attachPropertiesToComponent } from './types';
 import { getArrowStyle, getModalStyle } from './utils';
 import { MARGIN } from './utils/getModalStyle';
 import { getScrollParent } from './utils/getScrollParent';
+
+const transformFrom = { opacity: 0, transform: `scale(0)` };
+const transformTo = { opacity: 1, transform: `scale(1)` };
+const transitionProperty = 'transform, opacity';
 
 /**
  * React Popover
@@ -52,10 +57,6 @@ const Popover = (props: PopoverProps): React.ReactElement => {
   const mountNode = getMountContainer(mountContainer);
   const mountedRef = useRef(false);
 
-  useUpdateEffect(() => {
-    onVisibleChange?.(visible);
-  }, [visible]);
-
   const calculateStyle = React.useCallback(
     (anchorEl, scrollContainer, isFirstMount = false) => {
       const el = popoverRef.current;
@@ -70,22 +71,21 @@ const Popover = (props: PopoverProps): React.ReactElement => {
       );
       const arrowStyle = getArrowStyle(el, placement, MARGIN);
 
-      el.style.transitionProperty = 'none';
-      el.style.top = modalStyle.top + 'px';
-      el.style.left = modalStyle.left + 'px';
-      el.style.position = modalStyle.position;
+      applyStyleOrClsToElement(el, {
+        transitionProperty: 'none',
+        top: modalStyle.top + 'px',
+        left: modalStyle.left + 'px',
+        position: modalStyle.position,
+      });
 
       if (transition && isFirstMount) {
-        el.style.visibility = 'hidden';
-        el.style.opacity = '0';
-        el.style.transform = 'scale(0)';
+        applyStyleOrClsToElement(el, transformFrom);
 
         // trigger the browser to synchronously calculate the style and layout
         // aka trigger reflow / layout thrashing
-        // in case of treeshaking 
+        // in case of treeshaking
         el['__oh__'] = el.offsetHeight;
-        el.style.transitionProperty = 'transform, opacity';
-        el.style.visibility = 'visible';
+        applyStyleOrClsToElement(el, { transitionProperty });
       }
       setArrowStyle(arrowStyle);
     },
@@ -106,9 +106,23 @@ const Popover = (props: PopoverProps): React.ReactElement => {
     });
   };
 
+  const closeOutsideHandler = useCallback(
+    (e) => {
+      const el = popoverRef.current;
+      const anchor = anchorRef.current;
+
+      if (el && !el.contains(e.target) && !anchor.contains(e.target)) {
+        onCloseRef.current?.();
+      }
+    },
+    [onCloseRef]
+  );
+
   useEventListener(() => window, 'resize', visible ? handleResize : null);
 
   useEventListener(() => window, 'scroll', visible ? handleResize : null);
+
+  useEventListener(() => document, 'click', closeOnClickOutside ? closeOutsideHandler : null);
 
   useLayoutEffect(() => {
     const anchorEl = anchorRef.current;
@@ -122,31 +136,21 @@ const Popover = (props: PopoverProps): React.ReactElement => {
     }
   }, [visible, calculateStyle]);
 
-  const closeOutsideHandler = useCallback(
-    (e) => {
-      const el = popoverRef.current;
-      const anchor = anchorRef.current;
-
-      if (el && !el.contains(e.target) && !anchor.contains(e.target)) {
-        onCloseRef.current?.();
-      }
-    },
-    [onCloseRef]
-  );
-
-  useEventListener(() => document, 'click', closeOnClickOutside ? closeOutsideHandler : null);
-
-  const trasformOrigin = useMemo(() => {
+  const transformOrigin = useMemo(() => {
     return getTransformPosition(placement);
   }, [placement]);
 
   const active = useCSSTransition(
     () => popoverRef.current,
     visible,
-    { opacity: 0, transform: `scale(0)` },
-    { opacity: 1, transform: `scale(1)` },
+    transformFrom,
+    transformTo,
     transitionDuration
   );
+
+  useUpdateEffect(() => {
+    onVisibleChange?.(visible);
+  }, [visible]);
 
   return (
     <>
@@ -171,10 +175,10 @@ const Popover = (props: PopoverProps): React.ReactElement => {
                 position: 'absolute',
                 background: '#fff',
                 zIndex: 1000,
-                transformOrigin: trasformOrigin,
+                transformOrigin,
                 transitionDuration: `${transitionDuration}ms`,
                 transitionProperty: 'none',
-                willChange: 'transform, opacity',
+                willChange: transitionProperty,
                 ...style,
               }}
             >

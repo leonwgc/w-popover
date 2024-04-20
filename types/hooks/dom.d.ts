@@ -19,4 +19,4 @@ export declare const getEventTarget: (target: any, defaultTarget: any) => Elemen
  * @param styleOrCls
  * @param toBeRemovedCls
  */
-export declare const applyStyleOrClsToElement: (el: HTMLElement, styleOrCls: React.CSSProperties | string, toBeRemovedCls: React.CSSProperties | string) => void;
+export declare const applyStyleOrClsToElement: (el: HTMLElement, styleOrCls: React.CSSProperties | string, toBeRemovedCls?: React.CSSProperties | string) => void;
