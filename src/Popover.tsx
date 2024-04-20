@@ -10,8 +10,9 @@ import useLatest from './hooks/useLatest';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import { hide, show } from './show';
 import { PopoverProps, attachPropertiesToComponent } from './types';
-import { getArrowStyle, getModalStyle, getScrollContainer } from './utils';
+import { getArrowStyle, getModalStyle } from './utils';
 import { MARGIN } from './utils/getModalStyle';
+import { getScrollParent } from './utils/getScrollContainer';
 
 /**
  * React Popover
@@ -92,7 +93,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
 
   const handleResize = () => {
     const anchorEl = anchorRef.current;
-    const scrollContainer = getScrollContainer(anchorEl);
+    const scrollContainer = getScrollParent(anchorEl);
 
     calculateStyle(anchorEl, scrollContainer);
 
@@ -110,7 +111,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
 
   useLayoutEffect(() => {
     const anchorEl = anchorRef.current;
-    const scrollContainer = getScrollContainer(anchorEl);
+    const scrollContainer = getScrollParent(anchorEl);
 
     if (visible) {
       calculateStyle(anchorEl, scrollContainer, !mountedRef.current);

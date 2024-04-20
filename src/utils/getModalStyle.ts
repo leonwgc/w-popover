@@ -10,7 +10,7 @@ interface IModalStyle {
   left: number;
 }
 
-export type Offset = { x?: number; y?: number };
+export type Offset = { x?: number; y?: number; };
 
 /**
  * 根据选择器所选元素、modal 的长宽、用户定义的 placement 和 offset，获取 modal 的位置
@@ -33,7 +33,8 @@ export const getModalStyle = (
   const anchorPos = anchorEl.getBoundingClientRect();
   const parentPos = parentEl.getBoundingClientRect();
 
-  // const { scrollTop } = scrollContainer;
+
+  const scrollTop = scrollContainer instanceof Element ? scrollContainer.scrollTop : window.pageYOffset;
 
   const isParentBody = getNodeName(parentEl) === 'body';
   const isAnchorFixed = getComputedStyle(anchorEl).position === 'fixed';
@@ -49,8 +50,8 @@ export const getModalStyle = (
   const anchorTop = isAnchorFixed
     ? anchorPos.top
     : isParentBody
-    ? anchorPos.top + window.pageYOffset
-    : getOffsetTop(anchorEl);
+      ? anchorPos.top + scrollTop
+      : getOffsetTop(anchorEl);
 
   /* The distance between the top of the offsetParent and the top of the anchor.
    *

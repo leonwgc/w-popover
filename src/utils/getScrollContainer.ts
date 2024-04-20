@@ -6,30 +6,35 @@ import {
   isHTMLElement,
 } from './utils';
 
-export const getScrollContainer = (
-  node: Element | HTMLElement,
-  callback?: (node: Element | null) => unknown
-): Element => {
-  let currentNode = getParentNode(node);
+const overflowScrollReg = /scroll|auto|overlay/i;
+const ELEMENT_NODE_TYPE = 1;
 
-  while (
-    isHTMLElement(currentNode as Element) &&
-    ['html', 'body'].indexOf(getNodeName(currentNode as Element)) < 0
-  ) {
-    const css = getComputedStyle(currentNode as Element);
-    const { overflowY } = css;
-    const isScrollable = overflowY !== 'visible' && overflowY !== 'hidden';
+type ScrollElement = Element | Window;
 
-    callback?.(currentNode as Element);
+function isElement(node: Element) {
+  return node.tagName !== 'HTML' && node.tagName !== 'BODY' && node.nodeType === ELEMENT_NODE_TYPE;
+}
 
-    if (
-      isScrollable &&
-      (currentNode as Element).scrollHeight > (currentNode as Element).clientHeight
-    ) {
-      return currentNode as Element;
+
+/**
+ *
+ * 获取最近的滚动父元素，如果没有，则返回root, root默认是window
+ *
+ * @export
+ * @param {Element} el
+ * @param {(ScrollElement | null | undefined)} [root=window]
+ * @return {*}
+ */
+export function getScrollParent(el: Element, root: ScrollElement | null | undefined = window): Element | Window {
+  let node = el;
+
+  while (node && node !== root && isElement(node)) {
+    const { overflowY } = window.getComputedStyle(node);
+    if (overflowScrollReg.test(overflowY)) {
+      return node;
     }
-    currentNode = (currentNode as Element).parentNode;
+    node = node.parentNode as Element;
   }
 
-  return getDocumentElement(node);
-};
+  return root;
+}
