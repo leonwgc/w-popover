@@ -10,4 +10,4 @@ export declare const hide: () => void;
  * @param {ShowProps} props
  * @return {*}  hide popover fun.
  */
-export declare const show: (props: ShowProps) => () => void;
+export declare const show: (props: ShowProps) => (() => void);

@@ -7,9 +7,4 @@ import { EventTargetType } from 'src/types';
  * @param {(e:Event) => void} [handler] event handler
  * @param {(boolean | AddEventListenerOptions | undefined)} [options=undefined] options of the 3rd parameter in addEventListener func.
  */
-export default function useEventListener(
-  target: EventTargetType,
-  type: string,
-  handler?: (e: Event) => void,
-  options?: any
-): void;
+export default function useEventListener(target: EventTargetType, type: string, handler?: (e: Event) => void, options?: any): void;
