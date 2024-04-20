@@ -46,7 +46,7 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
   }, [visible, hideOverflow]);
 
   return (
-    active && (
+    active ? (
       <div
         ref={wrapRef}
         {...rest}
@@ -68,10 +68,10 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
       >
         {children}
       </div>
-    )
+    ) : null
   );
 });
 
-Mask.displayName = 'UC-Mask';
+Mask.displayName = 'W-Mask';
 
 export default Mask;

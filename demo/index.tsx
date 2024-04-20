@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { render } from 'react-dom';
 import App from './App1';
 
-createRoot(document.querySelector('#root') as HTMLElement).render(<App />);
+render(<App />, document.querySelector('#root') as HTMLElement);
