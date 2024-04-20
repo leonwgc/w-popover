@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AutoCenter, Avatar, Button, Space, styled, useForceUpdate } from 'react-uni-comps';
 import Popover from '../src/Popover';
+// import Popover from '../dist/index.esm';
 import DemoBlock from './DemoBlock';
 import PageWrap from './PageWrap';
 import pkq from './images/pkq.png';
@@ -76,6 +77,7 @@ export default function App() {
           >
             <Button
               type="primary"
+              style={{ height: 80, width: 160 }}
               onClick={() => {
                 setVisible(true);
                 ref.current++;

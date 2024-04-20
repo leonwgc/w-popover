@@ -1,10 +1,3 @@
-import {
-  getDocumentElement,
-  getParentNode,
-  getComputedStyle,
-  getNodeName,
-  isHTMLElement,
-} from './utils';
 
 const overflowScrollReg = /scroll|auto|overlay/i;
 const ELEMENT_NODE_TYPE = 1;

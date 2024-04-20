@@ -12,7 +12,7 @@ import { hide, show } from './show';
 import { PopoverProps, attachPropertiesToComponent } from './types';
 import { getArrowStyle, getModalStyle } from './utils';
 import { MARGIN } from './utils/getModalStyle';
-import { getScrollParent } from './utils/getScrollContainer';
+import { getScrollParent } from './utils/getScrollParent';
 
 /**
  * React Popover
@@ -82,7 +82,8 @@ const Popover = (props: PopoverProps): React.ReactElement => {
 
         // trigger the browser to synchronously calculate the style and layout
         // aka trigger reflow / layout thrashing
-        el.offsetHeight;
+        // in case of treeshaking 
+        el['__oh__'] = el.offsetHeight;
         el.style.transitionProperty = 'transform, opacity';
         el.style.visibility = 'visible';
       }
