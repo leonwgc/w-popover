@@ -54,11 +54,15 @@ const Popover = (props: PopoverProps): React.ReactElement => {
   const offsetRef = useLatest(offset);
   const onCloseRef = useLatest(onClose);
   const [arrowStyle, setArrowStyle] = useState({});
-  const mountNode = getMountContainer(mountContainer);
-  const mountedRef = useRef(false);
+  const mountContainerRef = useLatest(mountContainer);
+  const [mountNode, setMountNode] = useState(() => {
+    return getMountContainer(mountContainer);
+  });
+  const mountNodeLRef = useLatest(mountNode);
+  const flagRef = useRef(false);
 
   const calculateStyle = React.useCallback(
-    (anchorEl, scrollContainer, isFirstMount = false) => {
+    (anchorEl, scrollContainer) => {
       const el = popoverRef.current;
 
       applyStyleOrClsToElement(el, { transitionProperty: 'none', transform: 'none' });
@@ -66,7 +70,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
       const modalStyle = getModalStyle(
         el,
         anchorEl,
-        document.body,
+        mountNodeLRef.current,
         scrollContainer,
         placement,
         offsetRef.current
@@ -79,7 +83,8 @@ const Popover = (props: PopoverProps): React.ReactElement => {
         position: modalStyle.position,
       });
 
-      if (transition && isFirstMount) {
+      if (transition && !flagRef.current) {
+        flagRef.current = true;
         applyStyleOrClsToElement(el, transformFrom);
 
         // trigger the browser to synchronously calculate the style and layout
@@ -90,7 +95,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
       }
       setArrowStyle(arrowStyle);
     },
-    [transition, placement, offsetRef]
+    [transition, placement, offsetRef, mountNodeLRef]
   );
 
   const handleResize = () => {
@@ -119,23 +124,43 @@ const Popover = (props: PopoverProps): React.ReactElement => {
     [onCloseRef]
   );
 
-  useEventListener(() => window, 'resize', visible ? handleResize : null);
+  useEventListener(() => window, 'resize', visible ? handleResize : void 0);
 
-  useEventListener(() => window, 'scroll', visible ? handleResize : null);
+  useEventListener(
+    () => {
+      const anchorEl = anchorRef.current;
+      const scrollContainer = getScrollParent(anchorEl);
+      return scrollContainer;
+    },
+    'scroll',
+    visible ? handleResize : void 0
+  );
 
-  useEventListener(() => document, 'click', closeOnClickOutside ? closeOutsideHandler : null);
+  useEventListener(() => document, 'click', closeOnClickOutside ? closeOutsideHandler : void 0);
+
+  const tryRender = useCallback(() => {
+    requestAnimationFrame(() => {
+      const node = getMountContainer(mountContainerRef.current);
+      if (node) {
+        setMountNode(node);
+      } else {
+        tryRender();
+      }
+    });
+  }, [mountContainerRef]);
 
   useLayoutEffect(() => {
     const anchorEl = anchorRef.current;
     const scrollContainer = getScrollParent(anchorEl);
 
-    if (visible) {
-      calculateStyle(anchorEl, scrollContainer, !mountedRef.current);
-      mountedRef.current = true;
+    if (mountNode && visible) {
+      calculateStyle(anchorEl, scrollContainer);
     } else {
-      mountedRef.current = false;
+      if (!mountNode) {
+        tryRender();
+      }
     }
-  }, [visible, calculateStyle]);
+  }, [calculateStyle, mountNode, tryRender, visible]);
 
   const transformOrigin = useMemo(() => {
     return getTransformPosition(placement);
@@ -143,7 +168,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
 
   const active = useCSSTransition(
     () => (transition ? popoverRef.current : null),
-    visible,
+    visible && !!mountNode,
     transformFrom,
     transformTo,
     transitionDuration
@@ -151,6 +176,9 @@ const Popover = (props: PopoverProps): React.ReactElement => {
 
   useUpdateEffect(() => {
     onVisibleChange?.(visible);
+    if (!visible) {
+      flagRef.current = false;
+    }
   }, [visible]);
 
   return (
@@ -165,62 +193,63 @@ const Popover = (props: PopoverProps): React.ReactElement => {
       />
       {React.cloneElement(children, { ref: anchorRef })}
 
-      {ReactDOM.createPortal(
-        <>
-          {((transition && active) || (!transition && visible)) && (
-            <div
-              {...rest}
-              ref={popoverRef}
-              className={clsx(className, 'w-popover')}
-              style={{
-                position: 'absolute',
-                background: '#fff',
-                zIndex: 1000,
-                transformOrigin,
-                transitionDuration: `${transitionDuration}ms`,
-                willChange: transition ? transitionProperty : 'unset',
-                ...style,
-              }}
-            >
-              {arrow && (
-                <div
-                  className={clsx('w-popover__arrow')}
-                  style={{
-                    position: 'absolute',
-                    width: 6,
-                    height: 6,
-                    zIndex: -1,
-                    background: 'inherit',
-                    transform: 'rotate(45deg)',
-                    ...arrowStyle,
-                  }}
-                />
-              )}
+      {mountNode &&
+        ReactDOM.createPortal(
+          <>
+            {((transition && active) || (!transition && visible)) && (
+              <div
+                {...rest}
+                ref={popoverRef}
+                className={clsx(className, 'w-popover')}
+                style={{
+                  position: 'absolute',
+                  background: '#fff',
+                  zIndex: 1000,
+                  transformOrigin,
+                  transitionDuration: `${transitionDuration}ms`,
+                  willChange: transition ? transitionProperty : 'unset',
+                  ...style,
+                }}
+              >
+                {arrow && (
+                  <div
+                    className={clsx('w-popover__arrow')}
+                    style={{
+                      position: 'absolute',
+                      width: 6,
+                      height: 6,
+                      zIndex: -1,
+                      background: 'inherit',
+                      transform: 'rotate(45deg)',
+                      ...arrowStyle,
+                    }}
+                  />
+                )}
 
-              {closable && (
-                <IconClose
-                  className={clsx('w-popover__close')}
-                  onClick={onClose}
-                  style={{
-                    position: 'absolute',
-                    zIndex: 10,
-                    top: 6,
-                    right: 6,
-                    cursor: 'pointer',
-                    color: 'rgb(0,0,0)',
-                    opacity: 0.35,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                />
-              )}
-              {content}
-            </div>
-          )}
-        </>,
-        mountNode
-      )}
+                {closable && (
+                  <IconClose
+                    className={clsx('w-popover__close')}
+                    onClick={onClose}
+                    style={{
+                      position: 'absolute',
+                      zIndex: 10,
+                      top: 6,
+                      right: 6,
+                      cursor: 'pointer',
+                      color: 'rgb(0,0,0)',
+                      opacity: 0.35,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  />
+                )}
+                {content}
+              </div>
+            )}
+          </>,
+          mountNode
+        )}
     </>
   );
 };

@@ -33,8 +33,8 @@ export const getModalStyle = (
   const anchorPos = anchorEl.getBoundingClientRect();
   const parentPos = parentEl.getBoundingClientRect();
 
-
-  const scrollTop = scrollContainer instanceof Element ? scrollContainer.scrollTop : window.pageYOffset;
+  const scrollTop =
+    scrollContainer instanceof Element ? scrollContainer.scrollTop : window.pageYOffset;
 
   const isParentBody = getNodeName(parentEl) === 'body';
   const isAnchorFixed = getComputedStyle(anchorEl).position === 'fixed';
@@ -50,15 +50,9 @@ export const getModalStyle = (
   const anchorTop = isAnchorFixed
     ? anchorPos.top
     : isParentBody
-      ? anchorPos.top + scrollTop
+      ? anchorPos.top
       : getOffsetTop(anchorEl);
 
-  /* The distance between the top of the offsetParent and the top of the anchor.
-   *
-   * We don't simply use anchorEl.offsetTop but the below code instead due to the following reason:
-   * for the cases with no mask, the anchorEl's should be positioned relative to the body rather than
-   * its real offsetParent.
-   */
   const top = anchorTop;
   const bottom = anchorPos.height + anchorTop;
   const left = anchorPos.left - (isAnchorFixed ? 0 : parentPos.left);
@@ -67,62 +61,50 @@ export const getModalStyle = (
 
   const transform: Record<string, Record<string, number>> = {
     'top': {
-      // modal放到内容的上面
       top: top - modalPos.height - MARGIN,
       left: left + width / 2 - modalPos.width / 2,
     },
     'bottom': {
-      // modal放到内容的下面
       top: bottom + MARGIN,
       left: left + width / 2 - modalPos.width / 2,
     },
     'left': {
-      // modal放到内容的左边
       top: top + height / 2 - modalPos.height / 2,
       left: left - modalPos.width - MARGIN,
     },
     'right': {
-      // modal放到内容的右边
       top: top + height / 2 - modalPos.height / 2,
       left: left + width + MARGIN,
     },
     'top-right': {
-      // modal的bottom-border紧贴内容的top-border，right-borders水平对齐
       top: top - modalPos.height - MARGIN,
       left: left + width - modalPos.width,
     },
     'top-left': {
-      // modal的bottom-border紧贴内容的top-border，left-borders水平对齐
       top: top - modalPos.height - MARGIN,
       left,
     },
     'bottom-right': {
-      // modal的top-border紧贴内容的bottom-border，right-borders水平对齐
       top: bottom + MARGIN,
       left: left + width - modalPos.width,
     },
     'bottom-left': {
-      // modal的top-border紧贴内容的bottom-border，left-borders水平对齐
       top: bottom + MARGIN,
       left,
     },
     'right-top': {
-      // modal的left-border紧贴内容的right-border，top-borders水平对齐
       top,
       left: left + width + MARGIN,
     },
     'left-top': {
-      // modal的right-border紧贴内容的left-border，top-borders水平对齐
       top,
       left: left - modalPos.width - MARGIN,
     },
     'right-bottom': {
-      // modal的left-border紧贴内容的right-border，bottom-borders水平对齐
       top: bottom - modalPos.height,
       left: left + width + MARGIN,
     },
     'left-bottom': {
-      // modal的right-border紧贴内容的left-border，bottom-borders水平对齐
       top: bottom - modalPos.height,
       left: left - modalPos.width - MARGIN,
     },
@@ -137,7 +119,7 @@ export const getModalStyle = (
 
   return {
     position: isAnchorFixed ? 'fixed' : 'absolute',
-    top: Math.max(position.top + offset.y, 0), // keep in view
-    left: Math.max(position.left + offset.x, 0),
+    top: position.top + offset.y,
+    left: position.left + offset.x,
   };
 };
