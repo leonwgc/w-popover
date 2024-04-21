@@ -1,7 +1,6 @@
 import { getComputedStyle, getNodeName } from './utils';
 import { getOffsetTop } from './getOffsetParent';
 
-/** popup距离trigger el的距离 */
 export const MARGIN = 12;
 
 interface IModalStyle {
@@ -13,7 +12,6 @@ interface IModalStyle {
 export type Offset = { x?: number; y?: number; };
 
 /**
- * 根据选择器所选元素、modal 的长宽、用户定义的 placement 和 offset，获取 modal 的位置
  * Calculate the modal's position based on its anchor element, user-defined placement and offset
  * @param {HTMLElement} modalEl
  * @param {Element} anchorEl
@@ -33,12 +31,9 @@ export const getModalStyle = (
   const anchorPos = anchorEl.getBoundingClientRect();
   const parentPos = parentEl.getBoundingClientRect();
 
-  const scrollTop =
-    scrollContainer instanceof Element ? scrollContainer.scrollTop : window.pageYOffset;
-
-  const isParentBody = getNodeName(parentEl) === 'body';
-  const isAnchorFixed = getComputedStyle(anchorEl).position === 'fixed';
-  // const anchorOffsetTop = getOffsetTop(anchorEl);
+  const isParentBody = getNodeName(scrollContainer) === 'body';
+  const anchorPosition = getComputedStyle(anchorEl).position;
+  const isAnchorFixedOrAbsolute = anchorPosition === 'fixed' || anchorPosition === 'absolute';
 
   // backup
   // const scrollY = isAnchorFixed
@@ -47,7 +42,7 @@ export const getModalStyle = (
   //   ? anchorPos.top + scrollTop
   //   : anchorOffsetTop;
 
-  const anchorTop = isAnchorFixed
+  const anchorTop = isAnchorFixedOrAbsolute
     ? anchorPos.top
     : isParentBody
       ? anchorPos.top
@@ -55,7 +50,7 @@ export const getModalStyle = (
 
   const top = anchorTop;
   const bottom = anchorPos.height + anchorTop;
-  const left = anchorPos.left - (isAnchorFixed ? 0 : parentPos.left);
+  const left = anchorPos.left - (isAnchorFixedOrAbsolute ? 0 : parentPos.left);
 
   const { width, height } = anchorPos;
 
@@ -118,7 +113,7 @@ export const getModalStyle = (
   const position = transform[placement];
 
   return {
-    position: isAnchorFixed ? 'fixed' : 'absolute',
+    position: anchorPosition === 'fixed' ? 'fixed' : 'absolute',
     top: position.top + offset.y,
     left: position.left + offset.x,
   };

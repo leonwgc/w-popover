@@ -18,7 +18,7 @@ function isElement(node: Element) {
  * @param {(ScrollElement | null | undefined)} [root=window]
  * @return {*}
  */
-export function getScrollParent(el: Element, root: ScrollElement | null | undefined = window): Element | Window {
+export function getScrollParent(el: Element, root: ScrollElement | null | undefined = document.body): Element | Window {
   let node = el;
 
   while (node && node !== root && isElement(node)) {
