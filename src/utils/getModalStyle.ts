@@ -42,11 +42,9 @@ export const getModalStyle = (
   //   ? anchorPos.top + scrollTop
   //   : anchorOffsetTop;
 
-  const anchorTop = isAnchorFixedOrAbsolute
+  const anchorTop = (isAnchorFixedOrAbsolute || isParentBody)
     ? anchorPos.top
-    : isParentBody
-      ? anchorPos.top
-      : getOffsetTop(anchorEl);
+    : getOffsetTop(anchorEl);
 
   const top = anchorTop;
   const bottom = anchorPos.height + anchorTop;
