@@ -31,7 +31,7 @@ export const getModalStyle = (
   const anchorPos = anchorEl.getBoundingClientRect();
   const parentPos = parentEl.getBoundingClientRect();
 
-  const isParentBody = getNodeName(scrollContainer) === 'body';
+  const isScrollParentBody = getNodeName(scrollContainer) === 'body';
   const anchorPosition = getComputedStyle(anchorEl).position;
   const isAnchorFixedOrAbsolute = anchorPosition === 'fixed' || anchorPosition === 'absolute';
 
@@ -42,9 +42,9 @@ export const getModalStyle = (
   //   ? anchorPos.top + scrollTop
   //   : anchorOffsetTop;
 
-  const anchorTop = (isAnchorFixedOrAbsolute || isParentBody)
-    ? anchorPos.top
-    : getOffsetTop(anchorEl);
+  const anchorTop = isAnchorFixedOrAbsolute
+    ? anchorPos.top : isScrollParentBody ? anchorPos.top + scrollContainer.scrollTop
+      : getOffsetTop(anchorEl);
 
   const top = anchorTop;
   const bottom = anchorPos.height + anchorTop;
