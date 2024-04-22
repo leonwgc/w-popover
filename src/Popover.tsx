@@ -3,6 +3,7 @@ import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from '
 import ReactDOM from 'react-dom';
 import IconClose from './IconClose';
 import Mask from './Mask';
+import { passiveIfSupported } from './dom';
 import { getTransformPosition } from './helper';
 import { applyStyleOrClsToElement } from './hooks/dom';
 import useCSSTransition from './hooks/useCSSTransition';
@@ -110,7 +111,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
     [onCloseRef]
   );
 
-  useEventListener(() => window, 'resize', visible ? handleChange : void 0);
+  useEventListener(() => window, 'resize', visible ? handleChange : void 0, passiveIfSupported);
 
   useEventListener(
     () => {
@@ -119,7 +120,8 @@ const Popover = (props: PopoverProps): React.ReactElement => {
       return scrollContainer;
     },
     'scroll',
-    visible ? handleChange : void 0
+    visible ? handleChange : void 0,
+    passiveIfSupported
   );
 
   useEventListener(() => document, 'click', closeOnClickOutside ? closeOutsideHandler : void 0);
