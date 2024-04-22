@@ -97,3 +97,7 @@ export type ShowProps = Omit<
   top?: number | string;
   anchor?: Element | string | React.MutableRefObject<Element>;
 };
+
+export type TooltipProps = {
+  hoverDelay?: number;
+} & PopoverProps;

@@ -5,5 +5,8 @@ import type { PopoverProps } from './types';
  * @param {PopoverProps} props
  * @return {*}
  */
-declare const Popover: (props: PopoverProps) => React.ReactElement;
+declare const Popover: {
+    (props: PopoverProps): React.ReactElement;
+    displayName: string;
+};
 export default Popover;

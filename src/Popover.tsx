@@ -224,4 +224,6 @@ const Popover = (props: PopoverProps): React.ReactElement => {
   );
 };
 
+Popover.displayName = 'W-Popover';
+
 export default Popover;

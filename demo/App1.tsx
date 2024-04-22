@@ -1,10 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { AutoCenter, Button, Space, styled, useForceUpdate } from 'react-uni-comps';
-import Popover from '../src/Popover';
+import { Popover, Tooltip } from '../src';
 // import Popover from '../dist/index.esm';
 import DemoBlock from './DemoBlock';
 import PageWrap from './PageWrap';
-import Tooltip from './Tooltip';
 
 const StyledContent = styled.div`
   width: 100px;
@@ -70,15 +69,15 @@ export default function App() {
       <DemoBlock title="Tooltip">
         <AutoCenter>
           <Space>
-            <Tooltip title={`This's a tooltip `} placement={'top'}>
+            <Tooltip content={`This's a tooltip `} placement={'top'}>
               <Button type="primary">Tooltip at top</Button>
             </Tooltip>
 
-            <Tooltip title={`This's a tooltip `} placement={'bottom'}>
+            <Tooltip content={`This's a tooltip `} placement={'bottom'}>
               <Button type="primary">Tooltip at bottom</Button>
             </Tooltip>
 
-            <Tooltip title={`This's a tooltip `} placement={'right'}>
+            <Tooltip content={`This's a tooltip `} placement={'right'}>
               <Button type="primary">Tooltip at right</Button>
             </Tooltip>
           </Space>

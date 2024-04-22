@@ -66,3 +66,6 @@ export declare type ShowProps = Omit<PopoverProps, 'children' | 'onVisibleChange
     top?: number | string;
     anchor?: Element | string | React.MutableRefObject<Element>;
 };
+export declare type TooltipProps = {
+    hoverDelay?: number;
+} & PopoverProps;
