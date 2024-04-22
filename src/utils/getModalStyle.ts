@@ -15,42 +15,39 @@ export type Offset = { x?: number; y?: number };
  * Calculate the modal's position based on its anchor element, user-defined placement and offset
  * @param {HTMLElement} modalEl
  * @param {Element} anchorEl
- * @param {Element} parentEl
+ * @param {Element} mountEl
  * @param {string} placement
  * @param {object} customOffset
  */
 export const getModalStyle = (
   modalEl: Element,
   anchorEl: Element,
-  parentEl: Element,
-  scrollContainer: Element,
+  mountEl: Element,
+  scrollContainer: Element | Window,
   placement = 'bottom',
   customOffset: Offset
 ): IModalStyle => {
   const modalPos = modalEl.getBoundingClientRect();
   const anchorPos = anchorEl.getBoundingClientRect();
-  const parentPos = parentEl.getBoundingClientRect();
+  const parentPos = mountEl.getBoundingClientRect();
 
-  const isParentBody = getNodeName(parentEl) === 'body';
+  const isParentBody = getNodeName(mountEl) === 'body';
   const anchorPosition = getComputedStyle(anchorEl).position;
-  const isAnchorFixedOrAbsolute = anchorPosition === 'fixed' || anchorPosition === 'absolute';
+  const isAnchorFixed = anchorPosition === 'fixed';
+  const scrollTop =
+    scrollContainer instanceof Element ? scrollContainer.scrollTop : scrollContainer.pageYOffset;
 
-  // backup
-  // const scrollY = isAnchorFixed
-  //   ? anchorPos.top
-  //   : isParentBody
-  //   ? anchorPos.top + scrollTop
-  //   : anchorOffsetTop;
-
-  const anchorTop = isAnchorFixedOrAbsolute
-    ? anchorPos.top
-    : isParentBody
-    ? anchorPos.top - scrollContainer.scrollTop
-    : getOffsetTop(anchorEl);
+  const anchorTop =
+    anchorPosition === 'fixed' ||
+    (anchorPosition === 'absolute' && scrollContainer instanceof Element)
+      ? anchorPos.top
+      : isParentBody
+      ? anchorPos.top + scrollTop
+      : getOffsetTop(anchorEl);
 
   const top = anchorTop;
   const bottom = anchorPos.height + anchorTop;
-  const left = anchorPos.left - (isAnchorFixedOrAbsolute ? 0 : parentPos.left);
+  const left = anchorPos.left - (isAnchorFixed ? 0 : parentPos.left);
 
   const { width, height } = anchorPos;
 
@@ -113,7 +110,7 @@ export const getModalStyle = (
   const position = transform[placement];
 
   return {
-    position: anchorPosition === 'fixed' ? 'fixed' : 'absolute',
+    position: isAnchorFixed ? 'fixed' : 'absolute',
     top: position.top + offset.y,
     left: position.left + offset.x,
   };

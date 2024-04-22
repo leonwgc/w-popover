@@ -50,6 +50,17 @@ export default function App() {
           </Popover>
         </div>
       </div>
+
+      <Popover
+        placement="right"
+        visible
+        content="I'm here abs "
+        style={{ padding: 6, background: '#666', color: '#fff' }}
+      >
+        <Button type="primary" style={{ position: 'absolute', left: 150, top: 50 }}>
+          hi, herer~
+        </Button>
+      </Popover>
     </div>
   );
 }
