@@ -10,50 +10,52 @@ export interface ITargetPos {
 }
 export declare type MountContainerType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
 export declare type PopoverProps = {
-    /** 弹框位置,默认bottom */
+    /** Popover display position. default: bottom */
     placement?: Placement;
-    /** 触发元素，如果是组件，需要forwardRef到dom */
+    /** Trigger element，If a component been used please specify the the forwardRef to inner DOM element */
     children: React.ReactElement;
-    /** 弹框内容 */
+    /** Content to show */
     content?: React.ReactNode;
-    /** 弹框内容是否显示 */
+    /** Whether to show the popover */
     visible?: boolean;
-    /** visible状态变化回调 */
+    /** Visibility change callback */
     onVisibleChange?: (visible: boolean) => void;
-    /** arrow是否显示 */
+    /** Whether to show arrow */
     arrow?: boolean;
-    /** 关闭按钮是否显示 */
+    /** Whether to show close button on upper right of the popover. */
     closable?: boolean;
-    /** container style */
+    /** Popover container style to apply */
     style?: React.CSSProperties;
-    /**  关闭回调 */
+    /** Trigger to unmount the popover */
     onClose?: () => void;
+    /** Popover container css classname to apply */
     className?: string;
-    /** 是否显示遮罩 */
+    /** Whether to show a mask layer below the popover.  */
     mask?: boolean;
-    /** 遮罩样式 */
+    /** Mask style if mask is enabled. */
     maskStyle?: React.CSSProperties;
-    /** 遮罩class*/
+    /** Mask css className if mask is enabled. */
     maskClass?: string;
-    /** 弹框自定义偏移 */
+    /** Manually set a left,top offset to popover
+     * type Offset = { x?: number; y?: number }; */
     offset?: Offset;
     /**
-     * 点击外部区域是否关闭
+     * Whether to close the Popover when click outside area.
      * @default true
      * */
     closeOnClickOutside?: boolean;
     /**
-     * 点击遮罩是否关闭
+     *  Whether to close the Popover when click mask area.
      * @default true
      * */
     closeOnMaskClick?: boolean;
     /**
-     * transition on / off
+     *  Whether to enable entrance transition effect.
      * @default true
      *  */
     transition?: boolean;
     /**
-     *  transitionDuration 200
+     *  Transition duration time. default: 200 ms
      */
     transitionDuration?: number;
 };

@@ -1,98 +1,82 @@
-### 特点
+### Features
 
-1. 基于 React hooks
-2. 体积小，不依赖第三方库
+1. Based on React hooks
+2. Small size, zero 3rd-party library dependencies.
 
-## demo
+## Usage
+
 ```jsx
 import React, { useState } from 'react';
-import Popover from 'w-popover';
-import DemoBlock from './DemoBlock';
-import PageWrap from './PageWrap';
+import Popover from '../src/Popover';
 
 export default function App() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   return (
-    <PageWrap>
-      <DemoBlock title="Simple usage">
-        <div>
-          <Popover
-            placement="bottom-right"
-            visible={visible}
-            content="I'm here"
-            style={{ padding: 6, width: 150, height: 44, background: '#999', color: '#fff' }} // popover container style
-          >
-            <div
-              role="button"
-              style={{
-                padding: '6px 12px',
-                display: 'inline-flex',
-                alignItems: 'center',
-                height: 30,
-                border: '1px dashed',
-              }}
-              onClick={() => setVisible(true)}
-            >
-              This is anchor button to trigger Popover to showup
-            </div>
-          </Popover>
-        </div>
-      </DemoBlock>
-    </PageWrap>
+    <div>
+      <Popover
+        placement="bottom-right"
+        visible={visible}
+        onClose={() => setVisible(false)}
+        closeOnClickOutside
+        content="This is ReactNode content."
+      >
+        <button onClick={() => setVisible(true)}>Anchor to trigger Popover to showup</button>
+      </Popover>
+    </div>
   );
-}
-
 ```
 
-## Props 定义
+## Props Definition
 
 ```js
 type Props = {
-  /** 弹框位置, 默认bottom */
+  /** Popover display position. default: bottom */
   placement?: Placement,
-  /** 触发元素，如果是组件，需要forwardRef到dom */
+  /** Trigger element，If a component been used please specify the the forwardRef to inner DOM element */
   children: React.ReactElement,
-  /** 弹框内容 */
+  /** Content to show */
   content?: React.ReactNode,
-  /** 弹框内容是否显示 */
+  /** Whether to show the popover */
   visible?: boolean,
-  /** visible状态变化回调 */
+  /** Visibility change callback */
   onVisibleChange?: (visible: boolean) => void,
-  /** arrow是否显示 */
+  /** Whether to show arrow */
   arrow?: boolean,
-  /** 关闭按钮是否显示 */
+  /** Whether to show close button on upper right of the popover. */
   closable?: boolean,
-  /** 外层容器组件style */
+  /** Popover container style to apply */
   style?: React.CSSProperties,
-  /** 关闭回调 */
+  /** Trigger to unmount the popover */
   onClose?: () => void,
+  /** Popover container css classname to apply */
   className?: string,
-  /** 是否显示遮罩 */
+  /** Whether to show a mask layer below the popover.  */
   mask?: boolean,
-  /** 遮罩样式 */
+  /** Mask style if mask is enabled. */
   maskStyle?: React.CSSProperties,
-  /** 遮罩class*/
+  /** Mask css className if mask is enabled. */
   maskClass?: string,
-  /** 弹框自定义偏移 type Offset = { x?: number; y?: number }; */
+  /** Manually set a left,top offset to popover
+   * type Offset = { x?: number; y?: number }; */
   offset?: Offset,
   /**
-   * 点击外部区域是否关闭
+   * Whether to close the Popover when click outside area.
    * @default true
    * */
   closeOnClickOutside?: boolean,
   /**
-   * 点击遮罩是否关闭
+   *  Whether to close the Popover when click mask area.
    * @default true
    * */
   closeOnMaskClick?: boolean,
   /**
-   * 入场过渡动画是否开启
+   *  Whether to enable entrance transition effect.
    * @default true
    *  */
   transition?: boolean,
   /**
-   *  入场动画持续时间 200
+   *  Transition duration time. default: 200 ms
    */
   transitionDuration?: number,
 };
