@@ -1,15 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { useMount, Button } from 'react-uni-comps';
+import { Button } from 'react-uni-comps';
 import Popover from '../src';
 
 export default function App() {
   const ref = useRef();
-
   const [visible, setVisible] = useState(true);
-
-  useMount(() => {
-    document.title = 'w-popover';
-  });
 
   return (
     <div style={{ height: '100vh', display: 'flex', alignItems: 'center' }}>
@@ -28,9 +23,8 @@ export default function App() {
           <Popover
             placement="bottom"
             visible={visible}
-            content="I'm here"
+            content="I'm here "
             style={{ padding: 6 }}
-            // onClose={() => setVisible(false)}
             mountContainer={() => ref.current}
           >
             <Button outlined onClick={() => setVisible(true)}>
@@ -38,7 +32,7 @@ export default function App() {
             </Button>
           </Popover>
 
-          <Popover placement="bottom" visible content="I'm here" style={{ padding: 6 }}>
+          <Popover placement="bottom" visible content="I'm here abs" style={{ padding: 6 }}>
             <Button outlined style={{ position: 'absolute', left: 50, top: 50 }}>
               hi, herer~
             </Button>
