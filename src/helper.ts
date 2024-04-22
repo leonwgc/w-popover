@@ -1,6 +1,7 @@
 import type { MountContainerType, Placement } from './types';
+import getOppositePosition from './utils/getReversePosition';
 
-export const isNumber = (n) => {
+export const isNumber = (n: string | number): boolean => {
   return Object.prototype.toString.call(n) === '[object Number]' && n === n;
 };
 
@@ -24,13 +25,6 @@ export const getMountContainer = (container: MountContainerType): HTMLElement =>
   return mountNode;
 };
 
-const aniMap = {
-  top: 'bottom',
-  bottom: 'top',
-  left: 'right',
-  right: 'left',
-};
-
 /**
  * Get transform origin position.
  * @param placement
@@ -42,7 +36,7 @@ export const getTransformPosition = (placement: Placement): string => {
   let ret = '';
 
   if (pos[0]) {
-    ret += aniMap[pos[0]];
+    ret += getOppositePosition[pos[0]];
   }
 
   if (pos[1]) {
@@ -51,3 +45,26 @@ export const getTransformPosition = (placement: Placement): string => {
 
   return ret;
 };
+
+/**
+ * attach static props to component
+ *
+ * @export
+ * @template C
+ * @template P
+ * @param {C} component
+ * @param {P} properties
+ * @return {*}  {(C & P)}
+ */
+export function attachPropertiesToComponent<C, P extends Record<string, any>>(
+  component: C,
+  properties: P
+): C & P {
+  const ret = component as any;
+  for (const key in properties) {
+    if (properties.hasOwnProperty(key)) {
+      ret[key] = properties[key];
+    }
+  }
+  return ret;
+}

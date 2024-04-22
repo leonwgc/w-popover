@@ -1,24 +1,22 @@
-
 const overflowScrollReg = /scroll|auto|overlay/i;
 const ELEMENT_NODE_TYPE = 1;
 
-type ScrollElement = Element | Window;
-
+/**
+ * Check whether a node is Element.
+ * @param node
+ * @returns
+ */
 function isElement(node: Element) {
   return node.tagName !== 'HTML' && node.tagName !== 'BODY' && node.nodeType === ELEMENT_NODE_TYPE;
 }
 
-
 /**
- *
- * 获取最近的滚动父元素，如果没有，则返回root, root默认是window
- *
- * @export
- * @param {Element} el
- * @param {(ScrollElement | null | undefined)} [root=window]
- * @return {*}
+ * Get the nearest scroll parent.
+ * @param el
+ * @param root
+ * @returns
  */
-export function getScrollParent(el: Element, root: ScrollElement | null | undefined = document.body): Element | Window {
+export function getScrollParent(el: Element, root: Element = document.body): Element {
   let node = el;
 
   while (node && node !== root && isElement(node)) {

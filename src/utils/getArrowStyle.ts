@@ -1,5 +1,5 @@
 import React from 'react';
-import { getReversePosition } from './getReversePosition';
+import { getOppositePosition } from './getReversePosition';
 import { Placement, SinglePlacement } from '../types';
 
 export const getArrowStyle = (
@@ -21,7 +21,7 @@ export const getArrowStyle = (
 
   const extraStyle = {
     boxShadow: boxShadowmMap[firstPlacement],
-    [getReversePosition(firstPlacement)]: -diagonalWidth / 2,
+    [getOppositePosition(firstPlacement)]: -diagonalWidth / 2,
   };
 
   if (!lastPlacement) {

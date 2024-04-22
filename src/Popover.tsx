@@ -3,14 +3,14 @@ import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from '
 import ReactDOM from 'react-dom';
 import IconClose from './IconClose';
 import Mask from './Mask';
-import { getMountContainer, getTransformPosition } from './helper';
+import { attachPropertiesToComponent, getMountContainer, getTransformPosition } from './helper';
 import { applyStyleOrClsToElement } from './hooks/dom';
 import useCSSTransition from './hooks/useCSSTransition';
 import useEventListener from './hooks/useEventListener';
 import useLatest from './hooks/useLatest';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import { hide, show } from './show';
-import { PopoverProps, attachPropertiesToComponent } from './types';
+import type { PopoverProps } from './types';
 import { getArrowStyle, getModalStyle } from './utils';
 import { MARGIN } from './utils/getModalStyle';
 import { getScrollParent } from './utils/getScrollParent';

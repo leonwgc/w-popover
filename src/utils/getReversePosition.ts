@@ -1,13 +1,19 @@
 import { SinglePlacement } from '../types';
 
-export const getReversePosition = (position: SinglePlacement): SinglePlacement => {
-  const map: Record<SinglePlacement, SinglePlacement> = {
-    bottom: 'top',
-    top: 'bottom',
-    left: 'right',
-    right: 'left',
-  };
+const map: Record<SinglePlacement, SinglePlacement> = {
+  bottom: 'top',
+  top: 'bottom',
+  left: 'right',
+  right: 'left',
+};
+
+/**
+ * Get the opposite position.
+ * @param position
+ * @returns
+ */
+export const getOppositePosition = (position: SinglePlacement): SinglePlacement => {
   return map[position];
 };
 
-export default getReversePosition;
+export default getOppositePosition;
