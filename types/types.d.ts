@@ -9,17 +9,6 @@ export interface ITargetPos {
     height: number;
 }
 export declare type MountContainerType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
-/**
- * attach static props to component
- *
- * @export
- * @template C
- * @template P
- * @param {C} component
- * @param {P} properties
- * @return {*}  {(C & P)}
- */
-export declare function attachPropertiesToComponent<C, P extends Record<string, any>>(component: C, properties: P): C & P;
 export declare type PopoverProps = {
     /** 弹框位置,默认bottom */
     placement?: Placement;
@@ -48,11 +37,6 @@ export declare type PopoverProps = {
     maskClass?: string;
     /** 弹框自定义偏移 */
     offset?: Offset;
-    /**
-     * 弹框挂载节点
-     * @default document.body
-     */
-    mountContainer?: MountContainerType;
     /**
      * 点击外部区域是否关闭
      * @default true

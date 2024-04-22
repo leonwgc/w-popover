@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { AutoCenter, Avatar, Button, Space, styled, useForceUpdate } from 'react-uni-comps';
+import React, { useRef, useState } from 'react';
+import { AutoCenter, Button, Space, styled, useForceUpdate } from 'react-uni-comps';
 import Popover from '../src/Popover';
 // import Popover from '../dist/index.esm';
 import DemoBlock from './DemoBlock';
 import PageWrap from './PageWrap';
-import pkq from './images/pkq.png';
 import Tooltip from './Tooltip';
 
 const StyledContent = styled.div`
@@ -34,12 +33,6 @@ export default function App() {
   const [visible, setVisible] = useState(true);
 
   const ref = useRef(0);
-  const ref1 = useRef(0);
-  const elRef = useRef();
-  const btnRef = useRef();
-
-  const [index, setIndex] = useState(0);
-
   const forceRender = useForceUpdate();
 
   return (
@@ -90,6 +83,48 @@ export default function App() {
             </Tooltip>
           </Space>
         </AutoCenter>
+      </DemoBlock>
+
+      <DemoBlock title="Scroll">
+        <div
+          style={{
+            height: 200,
+            width: '100%',
+            border: '1px solid #666',
+            textAlign: 'center',
+            overflowY: 'scroll',
+            position: 'relative',
+          }}
+        >
+          <div style={{ height: '120vh', background: '#00bc8d' }}>
+            <Popover placement="bottom" visible content="I'm here " style={{ padding: 6 }}>
+              <Button outlined onClick={() => setVisible(true)}>
+                hi, there~
+              </Button>
+            </Popover>
+
+            <Popover placement="bottom" visible content="I'm here abs" style={{ padding: 6 }}>
+              <Button
+                outlined
+                onClick={() => setVisible(true)}
+                style={{ position: 'absolute', left: 50, top: 50 }}
+              >
+                hi, here~
+              </Button>
+            </Popover>
+
+            <Popover
+              placement="right"
+              visible
+              content="I'm here fixed"
+              style={{ padding: 6, background: '#666', color: '#fff' }}
+            >
+              <Button outlined style={{ position: 'fixed', bottom: 100, left: 150 }}>
+                hi, there~
+              </Button>
+            </Popover>
+          </div>
+        </div>
       </DemoBlock>
 
       <div style={{ height: '110vh' }}></div>

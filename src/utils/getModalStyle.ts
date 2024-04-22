@@ -37,17 +37,17 @@ export const getModalStyle = (
   const scrollTop =
     scrollContainer instanceof Element ? scrollContainer.scrollTop : scrollContainer.pageYOffset;
 
-  const anchorTop =
-    anchorPosition === 'fixed' ||
-    (anchorPosition === 'absolute' && scrollContainer instanceof Element)
-      ? anchorPos.top
-      : isParentBody
-      ? anchorPos.top + scrollTop
-      : getOffsetTop(anchorEl);
+  const useFixedPosition = anchorPosition === 'fixed' || scrollContainer instanceof Element;
+
+  const anchorTop = useFixedPosition
+    ? anchorPos.top
+    : isParentBody
+    ? anchorPos.top + scrollTop
+    : getOffsetTop(anchorEl);
 
   const top = anchorTop;
   const bottom = anchorPos.height + anchorTop;
-  const left = anchorPos.left - (isAnchorFixed ? 0 : parentPos.left);
+  const left = anchorPos.left - (useFixedPosition ? 0 : parentPos.left);
 
   const { width, height } = anchorPos;
 

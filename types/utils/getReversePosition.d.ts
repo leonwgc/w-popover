@@ -1,3 +1,8 @@
 import { SinglePlacement } from '../types';
-export declare const getReversePosition: (position: SinglePlacement) => SinglePlacement;
-export default getReversePosition;
+/**
+ * Get the opposite position.
+ * @param position
+ * @returns
+ */
+export declare const getOppositePosition: (position: SinglePlacement) => SinglePlacement;
+export default getOppositePosition;

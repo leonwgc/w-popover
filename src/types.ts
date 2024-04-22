@@ -60,11 +60,6 @@ export type PopoverProps = {
   /** 弹框自定义偏移 */
   offset?: Offset;
   /**
-   * 弹框挂载节点
-   * @default document.body
-   */
-  mountContainer?: MountContainerType;
-  /**
    * 点击外部区域是否关闭
    * @default true
    * */

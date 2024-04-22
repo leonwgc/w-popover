@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Button } from 'react-uni-comps';
+import { AutoCenter, Button } from 'react-uni-comps';
 import Popover from '../src';
 
 export default function App() {
@@ -12,14 +12,15 @@ export default function App() {
         ref={ref}
         style={{
           height: 200,
-          width: '100%',
+          width: 600,
+          margin: '0 auto',
           border: '1px solid #666',
           textAlign: 'center',
           overflowY: 'scroll',
           position: 'relative',
         }}
       >
-        <div style={{ height: '120vh', background: 'red' }}>
+        <div style={{ height: '120vh', width: '120%', background: '#00bc8d' }}>
           <Popover
             placement="bottom"
             visible={visible}
