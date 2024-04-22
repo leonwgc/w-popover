@@ -36,7 +36,7 @@ export default function App() {
 
   return (
     <PageWrap>
-      <DemoBlock title="普通" padding={40}>
+      <DemoBlock title="Popover" padding={40}>
         <AutoCenter>
           <Popover
             // transition={false}
