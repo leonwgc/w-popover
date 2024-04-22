@@ -2,7 +2,6 @@
 
 1. 基于 React hooks
 2. 体积小，不依赖第三方库
-3. 支持静态调用
 
 ## Props 定义
 
@@ -36,11 +35,6 @@ type Props = {
   /** 弹框自定义偏移 type Offset = { x?: number; y?: number }; */
   offset?: Offset,
   /**
-   * 弹框挂载节点
-   * @default document.body
-   */
-  mountContainer?: MountContainerType,
-  /**
    * 点击外部区域是否关闭
    * @default true
    * */
@@ -51,7 +45,7 @@ type Props = {
    * */
   closeOnMaskClick?: boolean,
   /**
-   * 入场动画是否开启
+   * 入场过渡动画是否开启
    * @default true
    *  */
   transition?: boolean,

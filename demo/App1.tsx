@@ -85,7 +85,7 @@ export default function App() {
         </AutoCenter>
       </DemoBlock>
 
-      <DemoBlock title="Scroll">
+      <DemoBlock title="Scroll (the green block is scrollable)">
         <div
           style={{
             height: 200,
