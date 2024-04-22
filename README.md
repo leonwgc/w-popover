@@ -7,7 +7,7 @@
 
 ```jsx
 import React, { useState } from 'react';
-import Popover from '../src/Popover';
+import Popover from 'w-popover';
 
 export default function App() {
   const [visible, setVisible] = useState(false);
