@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import IconClose from './IconClose';
@@ -172,7 +171,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
             <div
               {...rest}
               ref={popoverRef}
-              className={clsx(className, 'w-popover')}
+              className={`w-popover ${className}`}
               style={{
                 position: 'absolute',
                 background: '#fff',
@@ -185,7 +184,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
             >
               {arrow && (
                 <div
-                  className={clsx('w-popover__arrow')}
+                  className={'w-popover__arrow'}
                   style={{
                     position: 'absolute',
                     width: 6,
@@ -200,7 +199,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
 
               {closable && (
                 <IconClose
-                  className={clsx('w-popover__close')}
+                  className={'w-popover__close'}
                   onClick={onClose}
                   style={{
                     position: 'absolute',
