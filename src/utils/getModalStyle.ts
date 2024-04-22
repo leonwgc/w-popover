@@ -9,7 +9,7 @@ interface IModalStyle {
   left: number;
 }
 
-export type Offset = { x?: number; y?: number; };
+export type Offset = { x?: number; y?: number };
 
 /**
  * Calculate the modal's position based on its anchor element, user-defined placement and offset
@@ -31,7 +31,7 @@ export const getModalStyle = (
   const anchorPos = anchorEl.getBoundingClientRect();
   const parentPos = parentEl.getBoundingClientRect();
 
-  const isScrollParentBody = getNodeName(scrollContainer) === 'body';
+  const isParentBody = getNodeName(parentEl) === 'body';
   const anchorPosition = getComputedStyle(anchorEl).position;
   const isAnchorFixedOrAbsolute = anchorPosition === 'fixed' || anchorPosition === 'absolute';
 
@@ -43,8 +43,10 @@ export const getModalStyle = (
   //   : anchorOffsetTop;
 
   const anchorTop = isAnchorFixedOrAbsolute
-    ? anchorPos.top : isScrollParentBody ? anchorPos.top + scrollContainer.scrollTop
-      : getOffsetTop(anchorEl);
+    ? anchorPos.top
+    : isParentBody
+    ? anchorPos.top - scrollContainer.scrollTop
+    : getOffsetTop(anchorEl);
 
   const top = anchorTop;
   const bottom = anchorPos.height + anchorTop;

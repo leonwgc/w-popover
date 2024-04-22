@@ -30,7 +30,7 @@ export default function App() {
             visible={visible}
             content="I'm here"
             style={{ padding: 6 }}
-            onClose={() => setVisible(false)}
+            // onClose={() => setVisible(false)}
             mountContainer={() => ref.current}
           >
             <Button outlined onClick={() => setVisible(true)}>
@@ -40,6 +40,17 @@ export default function App() {
 
           <Popover placement="bottom" visible content="I'm here" style={{ padding: 6 }}>
             <Button outlined style={{ position: 'absolute', left: 50, top: 50 }}>
+              hi, herer~
+            </Button>
+          </Popover>
+
+          <Popover
+            placement="right"
+            visible
+            content="I'm here fixed"
+            style={{ padding: 6, background: '#666', color: '#fff' }}
+          >
+            <Button outlined style={{ position: 'fixed', left: 50, top: 150 }}>
               hi, herer~
             </Button>
           </Popover>
