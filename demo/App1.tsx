@@ -42,31 +42,6 @@ export default function App() {
 
   const forceRender = useForceUpdate();
 
-  useEffect(() => {
-    const p = placements[ref.current] as any;
-    Popover.show({
-      anchor: elRef,
-      style: { background: '#666', color: '#fff' },
-      content: <StyledContent>{p}</StyledContent>,
-      placement: p,
-    });
-  }, []);
-
-  const handlePkg = () => {
-    const p = placements[ref1.current++] as any;
-
-    Popover.show({
-      anchor: elRef,
-      style: { background: '#666', color: '#fff' },
-      content: <StyledContent>{p}</StyledContent>,
-      placement: p,
-    });
-
-    if (ref1.current > 11) {
-      ref1.current = 0;
-    }
-  };
-
   return (
     <PageWrap>
       <DemoBlock title="普通" padding={40}>
@@ -117,27 +92,7 @@ export default function App() {
         </AutoCenter>
       </DemoBlock>
 
-      <DemoBlock title="静态调用">
-        <Space>
-          <Button type="primary" onClick={handlePkg}>
-            静态调用
-          </Button>
-
-          <Button
-            ref={btnRef}
-            onClick={() => {
-              Popover.hide();
-            }}
-          >
-            关闭
-          </Button>
-        </Space>
-
-        <AutoCenter style={{ marginTop: 100 }}>
-          <img src={pkq} ref={elRef} onClick={handlePkg} style={{ cursor: 'pointer' }} />
-        </AutoCenter>
-        <div style={{ height: '10vh' }}></div>
-      </DemoBlock>
+      <div style={{ height: '110vh' }}></div>
     </PageWrap>
   );
 }
