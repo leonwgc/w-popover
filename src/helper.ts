@@ -1,4 +1,4 @@
-import type { MountContainerType, Placement } from './types';
+import type { MountContainerType, Placement, SinglePlacement } from './types';
 import getOppositePosition from './utils/getReversePosition';
 
 export const isNumber = (n: string | number): boolean => {
@@ -36,7 +36,7 @@ export const getTransformPosition = (placement: Placement): string => {
   let ret = '';
 
   if (pos[0]) {
-    ret += getOppositePosition[pos[0]];
+    ret += getOppositePosition(pos[0] as SinglePlacement);
   }
 
   if (pos[1]) {
