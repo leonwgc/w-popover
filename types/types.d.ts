@@ -55,9 +55,13 @@ export declare type PopoverProps = {
      *  */
     transition?: boolean;
     /**
-     *  Transition duration time. default: 200 ms
+     *  Transition duration time. default: 220 ms
      */
     transitionDuration?: number;
+    /**
+     *  transitionTimingFunction. default: ease-in-out
+     */
+    transitionTimingFunction?: string;
 };
 export declare type TargetType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
 export declare type EventTargetType = EventTarget | React.MutableRefObject<EventTarget> | (() => EventTarget);

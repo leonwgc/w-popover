@@ -34,7 +34,6 @@ export default function App() {
     </div>
   );
 }
-
 ```
 
 ## Props Definition
@@ -86,9 +85,13 @@ type Props = {
    *  */
   transition?: boolean,
   /**
-   *  Transition duration time. default: 200 ms
+   *  Transition duration time. default: 220 ms
    */
   transitionDuration?: number,
+  /**
+   *  transitionTimingFunction. default: ease-in-out
+   */
+  transitionTimingFunction?: string,
 };
 
 export type SinglePlacement = 'top' | 'bottom' | 'left' | 'right';

@@ -9,7 +9,7 @@ type Props = {
   /** 是否可见 */
   visible?: boolean;
   /** 动画时间
-   * @default 280
+   * @default 220
    */
   duration?: number;
   className?: string;
@@ -21,7 +21,7 @@ type Props = {
 
 /** 遮罩层 */
 const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
-  const { children, visible, style, hideOverflow = true, ...rest } = props;
+  const { children, visible, style, duration = 220, hideOverflow = true, ...rest } = props;
 
   const wrapRef = useRef(null);
   const lastOverFlowRef = useRef('');
@@ -33,7 +33,7 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     visible,
     { opacity: 0 },
     { opacity: 0.5 },
-    300
+    duration
   );
 
   useEffect(() => {
@@ -45,31 +45,29 @@ const Mask = React.forwardRef<HTMLDivElement, Props>((props: Props, ref) => {
     };
   }, [visible, hideOverflow]);
 
-  return (
-    active ? (
-      <div
-        ref={wrapRef}
-        {...rest}
-        style={{
-          ...style,
-          opacity: 0,
-          background: 'rgba(0, 0, 0)',
-          zIndex: 1000,
-          position: 'fixed',
-          left: 0,
-          top: 0,
-          bottom: 0,
-          right: 0,
-          width: '100%',
-          touchAction: 'none',
-          display: active ? '' : 'none',
-          transition: 'opacity 200ms linear',
-        }}
-      >
-        {children}
-      </div>
-    ) : null
-  );
+  return active ? (
+    <div
+      ref={wrapRef}
+      {...rest}
+      style={{
+        ...style,
+        opacity: 0,
+        background: 'rgba(0, 0, 0)',
+        zIndex: 1000,
+        position: 'fixed',
+        left: 0,
+        top: 0,
+        bottom: 0,
+        right: 0,
+        width: '100%',
+        touchAction: 'none',
+        display: active ? '' : 'none',
+        transition: `opacity ${duration}ms ease-in-out`,
+      }}
+    >
+      {children}
+    </div>
+  ) : null;
 });
 
 Mask.displayName = 'W-Mask';

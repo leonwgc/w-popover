@@ -41,7 +41,8 @@ const Popover = (props: PopoverProps): React.ReactElement => {
     closeOnClickOutside = true,
     closeOnMaskClick = true,
     transition = true,
-    transitionDuration = 200,
+    transitionDuration = 220,
+    transitionTimingFunction = 'ease-in-out',
     offset = {},
     ...rest
   } = props;
@@ -156,6 +157,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
         visible={mask && visible}
         className={maskClass}
         style={maskStyle}
+        duration={transitionDuration}
         onClick={() => {
           closeOnMaskClick && onClose?.();
         }}
@@ -174,6 +176,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
                 background: '#fff',
                 zIndex: 1000,
                 transformOrigin,
+                transitionTimingFunction,
                 transitionDuration: `${transitionDuration}ms`,
                 willChange: transition ? transitionProperty : 'unset',
                 ...style,

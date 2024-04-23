@@ -7,7 +7,7 @@ declare type Props = {
     /** 是否可见 */
     visible?: boolean;
     /** 动画时间
-     * @default 280
+     * @default 220
      */
     duration?: number;
     className?: string;
