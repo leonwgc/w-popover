@@ -80,7 +80,6 @@ const Popover = (props: PopoverProps): React.ReactElement => {
         flagRef.current = true;
         applyStyleOrClsToElement(el, transformFrom);
 
-        el['__oh__'] = el.offsetHeight;
         forceReflow(el);
         applyStyleOrClsToElement(el, { transitionProperty });
       }
@@ -169,7 +168,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
             <div
               {...rest}
               ref={popoverRef}
-              className={`w-popover ${className}`}
+              className={`w-popover ${className ? className : ''}`}
               style={{
                 position: 'absolute',
                 background: '#fff',
