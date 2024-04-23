@@ -2,7 +2,7 @@ import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from '
 import ReactDOM from 'react-dom';
 import IconClose from './IconClose';
 import Mask from './Mask';
-import { passiveIfSupported } from './dom';
+import { forceReflow, passiveIfSupported } from './dom';
 import { getTransformPosition } from './helper';
 import { applyStyleOrClsToElement } from './hooks/dom';
 import useCSSTransition from './hooks/useCSSTransition';
@@ -80,10 +80,8 @@ const Popover = (props: PopoverProps): React.ReactElement => {
         flagRef.current = true;
         applyStyleOrClsToElement(el, transformFrom);
 
-        // trigger the browser to synchronously calculate the style and layout
-        // reflow / layout thrashing
-        // in case of treeshaking
         el['__oh__'] = el.offsetHeight;
+        forceReflow(el);
         applyStyleOrClsToElement(el, { transitionProperty });
       }
       setArrowStyle(arrowStyle);

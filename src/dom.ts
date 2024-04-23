@@ -15,3 +15,10 @@ try {
       })
     );
 } catch (err) {}
+
+/**
+ * Force reflow
+ * @param node
+ * @returns
+ */
+export const forceReflow = (node: Element): number => node.scrollTop;
