@@ -1,18 +1,21 @@
-import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
 import IconClose from './IconClose';
 import Mask from './Mask';
-import { forceReflow, passiveIfSupported } from './dom';
+import { forceReflow, isBrowser, passiveIfSupported } from './dom';
 import { getTransformPosition } from './helper';
 import { applyStyleOrClsToElement } from './hooks/dom';
 import useCSSTransition from './hooks/useCSSTransition';
 import useEventListener from './hooks/useEventListener';
+import useIsomorphicLayoutEffect from './hooks/useIsomorphicLayoutEffect';
 import useLatest from './hooks/useLatest';
 import useUpdateEffect from './hooks/useUpdateEffect';
 import type { PopoverProps } from './types';
 import { getArrowStyle, getModalStyle } from './utils';
 import { MARGIN } from './utils/getModalStyle';
 import { getScrollParent } from './utils/getScrollParent';
+
+const useLayoutEffect = useIsomorphicLayoutEffect;
 
 const transformFrom = { opacity: 0, transform: `scale(0)` };
 const transformTo = { opacity: 1, transform: `scale(1)` };
@@ -164,63 +167,64 @@ const Popover = (props: PopoverProps): React.ReactElement => {
       />
       {React.cloneElement(children, { ref: anchorRef })}
 
-      {ReactDOM.createPortal(
-        <>
-          {((transition && active) || (!transition && visible)) && (
-            <div
-              {...rest}
-              ref={popoverRef}
-              className={`w-popover ${className ? className : ''}`}
-              style={{
-                position: 'absolute',
-                background: '#fff',
-                zIndex: 1000,
-                transformOrigin,
-                transitionTimingFunction,
-                transitionDuration: `${transitionDuration}ms`,
-                willChange: transition ? transitionProperty : 'unset',
-                ...style,
-              }}
-            >
-              {arrow && (
-                <div
-                  className={'w-popover__arrow'}
-                  style={{
-                    position: 'absolute',
-                    width: 6,
-                    height: 6,
-                    zIndex: -1,
-                    background: 'inherit',
-                    transform: 'rotate(45deg)',
-                    ...arrowStyle,
-                  }}
-                />
-              )}
+      {isBrowser &&
+        ReactDOM.createPortal(
+          <>
+            {((transition && active) || (!transition && visible)) && (
+              <div
+                {...rest}
+                ref={popoverRef}
+                className={`w-popover ${className ? className : ''}`}
+                style={{
+                  position: 'absolute',
+                  background: '#fff',
+                  zIndex: 1000,
+                  transformOrigin,
+                  transitionTimingFunction,
+                  transitionDuration: `${transitionDuration}ms`,
+                  willChange: transition ? transitionProperty : 'unset',
+                  ...style,
+                }}
+              >
+                {arrow && (
+                  <div
+                    className={'w-popover__arrow'}
+                    style={{
+                      position: 'absolute',
+                      width: 6,
+                      height: 6,
+                      zIndex: -1,
+                      background: 'inherit',
+                      transform: 'rotate(45deg)',
+                      ...arrowStyle,
+                    }}
+                  />
+                )}
 
-              {closable && (
-                <IconClose
-                  className={'w-popover__close'}
-                  onClick={onClose}
-                  style={{
-                    position: 'absolute',
-                    zIndex: 10,
-                    top: 6,
-                    right: 6,
-                    cursor: 'pointer',
-                    color: 'rgb(0,0,0)',
-                    opacity: 0.35,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                />
-              )}
-              {content}
-            </div>
-          )}
-        </>,
-        document.body
-      )}
+                {closable && (
+                  <IconClose
+                    className={'w-popover__close'}
+                    onClick={onClose}
+                    style={{
+                      position: 'absolute',
+                      zIndex: 10,
+                      top: 6,
+                      right: 6,
+                      cursor: 'pointer',
+                      color: 'rgb(0,0,0)',
+                      opacity: 0.35,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  />
+                )}
+                {content}
+              </div>
+            )}
+          </>,
+          document.body
+        )}
     </>
   );
 };

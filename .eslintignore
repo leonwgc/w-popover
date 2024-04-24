@@ -5,3 +5,6 @@ demo
 packx.config.js
 docs
 *.less
+ssr-lib
+pack.ssr.js
+index.tpl.js

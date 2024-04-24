@@ -1,5 +1,6 @@
 import React from 'react';
 import { ThemeProvider, createGlobalStyle } from 'react-uni-comps';
+import { isBrowser } from '../src/dom';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -15,7 +16,8 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const getColor = () => document.documentElement.style.getPropertyValue('--uc-color') || '#005cff';
+const getColor = () =>
+  (isBrowser && document.documentElement.style.getPropertyValue('--uc-color')) || '#005cff';
 
 const initialState = { theme: getColor() };
 
