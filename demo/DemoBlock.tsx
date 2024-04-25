@@ -1,25 +1,4 @@
 import React from 'react';
-import { styled } from 'react-uni-comps';
-
-const StyledBlock = styled.div`
-  font-size: 14px;
-
-  .title {
-    padding: 12px 8px 6px;
-    color: #969696;
-    font-size: 14px;
-  }
-
-  .main {
-    border: solid 1px #eee;
-    border-right: none;
-    border-left: none;
-  }
-
-  img {
-    max-width: 100%;
-  }
-`;
 
 type Props = {
   title?: string;
@@ -41,10 +20,10 @@ export default function Block({
   ...rest
 }: Props) {
   return (
-    <StyledBlock {...rest}>
-      {title && <div className="title">{title}</div>}
+    <div className="demo-block" {...rest}>
+      <div className="demo-block__title">{title}</div>
       <div
-        className="main"
+        className="demo-block__content"
         style={{
           padding,
           background,
@@ -54,6 +33,6 @@ export default function Block({
       >
         {children}
       </div>
-    </StyledBlock>
+    </div>
   );
 }

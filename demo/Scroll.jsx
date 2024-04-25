@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { AutoCenter, Button } from 'react-uni-comps';
+import { Button } from 'react-uni-comps';
 import Popover from '../src';
 
 export default function App() {
