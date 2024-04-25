@@ -39,8 +39,7 @@ export default function App() {
       <DemoBlock title="Popover" padding={40}>
         <AutoCenter>
           <Popover
-            // transition={false}
-            style={{ background: '#000', color: '#fff', padding: 0 }}
+            style={{ background: '#666', color: '#fff', padding: 0 }}
             placement={placements[ref.current] as any}
             visible={visible}
             onClose={() => setVisible(false)}
@@ -89,13 +88,13 @@ export default function App() {
           style={{
             height: 200,
             width: '100%',
-            border: '1px solid #666',
+            border: '1px solid #ccc',
             textAlign: 'center',
             overflowY: 'scroll',
             position: 'relative',
           }}
         >
-          <div style={{ height: '120vh', background: '#00bc8d' }}>
+          <div style={{ height: '120vh', background: '#ccc' }}>
             <Popover placement="bottom" visible content="I'm here " style={{ padding: 6 }}>
               <Button outlined onClick={() => setVisible(true)}>
                 hi, there~
