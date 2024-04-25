@@ -1,6 +1,9 @@
 import React from 'react';
-import { render } from 'react-dom';
+import { render, hydrate } from 'react-dom';
 import App from './App';
 import './App.less';
 
-render(<App />, document.querySelector('#root') as HTMLElement);
+const root = document.querySelector('#root') as HTMLElement;
+const doRender = root.hasChildNodes() ? hydrate : render;
+
+doRender(<App />, root);
