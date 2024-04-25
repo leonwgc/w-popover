@@ -84,7 +84,7 @@ const Popover = (props: PopoverProps): React.ReactElement => {
         flagRef.current = true;
         applyStyleOrClsToElement(el, transformFrom);
 
-        forceReflow(el);
+        el['__prevent__minify__removed__'] = forceReflow(el);
         applyStyleOrClsToElement(el, { transitionProperty });
       }
       setArrowStyle(arrowStyle);

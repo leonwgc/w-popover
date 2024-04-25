@@ -1,5 +1,5 @@
 import React from 'react';
-declare type Props = {
+type Props = {
     style?: React.CSSProperties;
     className?: string;
 } & React.HTMLAttributes<HTMLSpanElement>;

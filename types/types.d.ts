@@ -1,15 +1,15 @@
 import React from 'react';
 import type { Offset } from './utils/getModalStyle';
-export declare type SinglePlacement = 'top' | 'bottom' | 'left' | 'right';
-export declare type Placement = 'top' | 'left' | 'bottom' | 'right' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'left-top' | 'left-bottom' | 'right-top' | 'right-bottom' | SinglePlacement;
+export type SinglePlacement = 'top' | 'bottom' | 'left' | 'right';
+export type Placement = 'top' | 'left' | 'bottom' | 'right' | 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' | 'left-top' | 'left-bottom' | 'right-top' | 'right-bottom' | SinglePlacement;
 export interface ITargetPos {
     left: number;
     top: number;
     width: number;
     height: number;
 }
-export declare type MountContainerType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
-export declare type PopoverProps = {
+export type MountContainerType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
+export type PopoverProps = {
     /** Popover display position. default: bottom */
     placement?: Placement;
     /** Trigger element，If a component been used please specify the the forwardRef to inner DOM element */
@@ -63,13 +63,13 @@ export declare type PopoverProps = {
      */
     transitionTimingFunction?: string;
 };
-export declare type TargetType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
-export declare type EventTargetType = EventTarget | React.MutableRefObject<EventTarget> | (() => EventTarget);
-export declare type ShowProps = Omit<PopoverProps, 'children' | 'onVisibleChange' | 'closeOnClickOutside'> & {
+export type TargetType = HTMLElement | (() => HTMLElement) | React.MutableRefObject<HTMLElement>;
+export type EventTargetType = EventTarget | React.MutableRefObject<EventTarget> | (() => EventTarget);
+export type ShowProps = Omit<PopoverProps, 'children' | 'onVisibleChange' | 'closeOnClickOutside'> & {
     left?: number | string;
     top?: number | string;
     anchor?: Element | string | React.MutableRefObject<Element>;
 };
-export declare type TooltipProps = {
+export type TooltipProps = {
     hoverDelay?: number;
 } & PopoverProps;

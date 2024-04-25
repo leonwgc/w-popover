@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-declare type Props = {
+type Props = {
     /** 显示遮罩时，设置body.style.overflow为hidden
      * @default true
      */

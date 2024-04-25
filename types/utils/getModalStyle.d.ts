@@ -4,7 +4,7 @@ interface IModalStyle {
     top: number;
     left: number;
 }
-export declare type Offset = {
+export type Offset = {
     x?: number;
     y?: number;
 };
