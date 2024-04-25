@@ -1,6 +1,6 @@
 {
   "name": "w-popover",
-  "version": "2.1.2",
+  "version": "2.1.4",
   "description": "React Popover component",
   "keywords": [
     "Popover",
@@ -18,7 +18,7 @@
   "scripts": {
     "prepare": "husky install",
     "lint-staged": "lint-staged",
-    "build": "father-build --cjs --esm && tsc",
+    "build": "grandpa-build --cjs --esm && tsc",
     "doc": "node pack.ssr && node pack --build",
     "start": "node pack"
   },
@@ -47,7 +47,7 @@
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^2.5.1",
-    "father-build": "^1.22.5",
+    "grandpa-build": "^1.0.0",
     "husky": "^6.0.0",
     "lint-staged": "^10.5.4",
     "packw": "~2.2.0",

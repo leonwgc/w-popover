@@ -1,6 +1,6 @@
 import React, { useRef, useState, useReducer } from 'react';
-import { Popover, Tooltip } from '../src';
-// import Popover from '../dist/index.esm';
+// import { Popover, Tooltip } from '../src';
+import { Popover, Tooltip } from '../dist/index.esm';
 import DemoBlock from './DemoBlock';
 
 const placements = [
